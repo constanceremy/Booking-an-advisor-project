@@ -191,12 +191,12 @@ public class Process {
 				case 1 : advisor1.makeBooking(); break;
 			    case 2  :advisor2.makeBooking(); break;
 			    case 3  :advisor3.makeBooking(); break;
-			    case 4  :advisor4.makeBooking(); break;
-			    case 5  :advisor5.makeBooking(); break;
-			    case 6  :advisor6.makeBooking(); break;
-			    case 7  :advisor7.makeBooking(); break;
-			    case 8  :advisor8.makeBooking(); break;
-			    case 9  :advisor9.makeBooking(); break;
+			    case 4  :advisor3.makeBooking(); break;
+			    case 5  :advisor3.makeBooking(); break;
+			    case 6  :advisor3.makeBooking(); break;
+			    case 7  :advisor3.makeBooking(); break;
+			    case 8  :advisor3.makeBooking(); break;
+			    case 9  :advisor3.makeBooking(); break;
 			}//switch
 	}//end of makeBooking
 	
@@ -208,12 +208,12 @@ public class Process {
 			case 1 : advisor1.cancelBooking(); break;
 		    case 2  :advisor2.cancelBooking(); break;
 		    case 3  :advisor3.cancelBooking(); break;
-		    case 4  :advisor4.cancelBooking(); break;
-		    case 5  :advisor5.cancelBooking(); break;
-		    case 6  :advisor6.cancelBooking(); break;
-		    case 7  :advisor7.cancelBooking(); break;
-		    case 8  :advisor8.cancelBooking(); break;
-		    case 9  :advisor9.cancelBooking(); break;
+		    case 4  :advisor3.cancelBooking(); break;
+		    case 5  :advisor3.cancelBooking(); break;
+		    case 6  :advisor3.cancelBooking(); break;
+		    case 7  :advisor3.cancelBooking(); break;
+		    case 8  :advisor3.cancelBooking(); break;
+		    case 9  :advisor3.cancelBooking(); break;
 			}//switch	
 		}//end of cancelBooking
 	

@@ -23,7 +23,7 @@ public class LogInProgram {
 			}
 		
 			else if (userChoiceOne.equals(menuOptionRegister)) { // This choice presents the user with the registration menu
-				System.out.println("Thank you and goodbye.");
+				createUserMenu();
 				userDecisionOne = true;
 			}
 			
@@ -40,7 +40,56 @@ public class LogInProgram {
 		}
 	}
 	
+	public static void createUserMenu() {
+		Scanner input = new Scanner(System.in);
+		
+	   System.out.println("Please enter your first name: ");
+	   String firstname = input.next();
+	   
+	   System.out.println("Please enter your last name: ");
+	   String lastname = input.next();
+	   
+	   System.out.println("Please enter your StudentID: ");
+	   String StudentID = input.next();
+	   
+	   System.out.println("Please enter a password ");
+	   String password = input.next();
+	   
+	   System.out.println("Please enter your email: ");
+
+	   boolean emailValid = false; 
+	   String email; 
+	   
+	   //Here the system will check if a valid email was entered (an "@" is required)
+	   
+	   do {email = input.next();
+	      for (int i = 0; i<email.length(); i++) {
+	    	  if (email.charAt(i)=='@') {
+	    		  emailValid = true;
+	    	  }
+	    		
+	      }
+	      if(!emailValid) {
+	    	      System.out.println("Invalid Email - please type in a correct one containing '@': ");	      
+	      }
+	   } while (!emailValid);
+	   
+	   
+	  	  boolean isAdministrator = false;
+	      createUserAccount(firstname, lastname, StudentID, password, email, isAdministrator);
+	      
+	      //while(!emailValid);
+	      System.out.println("Congratulations - your account has been created ");
+
+	}
+
+	private static void createUserAccount(String firstname, String lastname, String StudentID, String password, String email,
+			boolean isAdministrator) {
+		
+	} 
 	
+	
+	// A log in method that is called when user wishes to log in rather than register. 
 	public static void LogInMenu() {
 		
 		Scanner input = new Scanner(System.in);
@@ -61,7 +110,7 @@ public class LogInProgram {
 			}
 			
 			else if (userChoiceTwo.equals(logInMenuStudent)) {
-				LogIn();
+				LogInAsStudent();
 				userDecisionTwo = true;
 			}
 			
@@ -80,9 +129,8 @@ public class LogInProgram {
 	}
 	
 	
-	
-	
-	public static void LogIn() {
+	// The actual log in system method - it is called when the user wishes to log in as student
+	public static void LogInAsStudent() {
 		
 		String systemUserName = "admin";
 		String systemPassword = "1234";
@@ -143,6 +191,8 @@ public class LogInProgram {
 				System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
 			}
 			
-		}
+		} // Closes the while loop for countOfTries
+				
+
 	}
 }

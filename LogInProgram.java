@@ -1,9 +1,10 @@
 package LogIn;
 import java.util.*;
+import java.io.*;
 
 public class LogInProgram {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 	
 		System.out.print("What would you like to do?\n1. Log-in \n2. Register (Students) ");
 		String menuOptionLogIn = "1"; // Choice is to log in
@@ -40,20 +41,34 @@ public class LogInProgram {
 		}
 	}
 	
-	public static void createUserMenu() {
-		Scanner input = new Scanner(System.in);
+	
+	
+	public static void createUserMenu() throws IOException {
 		
-	   System.out.println("Please enter your first name: ");
-	   String firstname = input.next();
+		// Create a file instance
+		java.io.File file = new java.io.File("C:\\Users\\Zhagzi\\Documents\\userdatabase.txt");
+		Scanner input = new Scanner(System.in);
+		//String lineSeparator = System.getProperty("line.separator");
+		
+		// Create a file
+		java.io.PrintWriter output = new java.io.PrintWriter(file);
+		
+	   System.out.println("Please enter your first name: " + System.getProperty("line.separator"));
+	   String firstName = input.next();
+	   output.println(firstName);
 	   
-	   System.out.println("Please enter your last name: ");
-	   String lastname = input.next();
+	   
+	   System.out.print("Please enter your last name: ");
+	   String lastName = input.next();
+	   output.println(lastName);
 	   
 	   System.out.println("Please enter your StudentID: ");
 	   String StudentID = input.next();
+	   output.println(StudentID);
 	   
-	   System.out.println("Please enter a password ");
+	   System.out.println("Please enter a password: ");
 	   String password = input.next();
+	   output.println(password);
 	   
 	   System.out.println("Please enter your email: ");
 
@@ -66,6 +81,7 @@ public class LogInProgram {
 	      for (int i = 0; i<email.length(); i++) {
 	    	  if (email.charAt(i)=='@') {
 	    		  emailValid = true;
+	    		  output.print(email);
 	    	  }
 	    		
 	      }
@@ -76,20 +92,23 @@ public class LogInProgram {
 	   
 	   
 	  	  boolean isAdministrator = false;
-	      createUserAccount(firstname, lastname, StudentID, password, email, isAdministrator);
+	      createUserAccount(firstName, lastName, StudentID, password, email, isAdministrator);
 	      
 	      //while(!emailValid);
 	      System.out.println("Congratulations - your account has been created ");
-
+	      output.close();
 	}
 
-	private static void createUserAccount(String firstname, String lastname, String StudentID, String password, String email,
+	
+	// Method called createUserAccount
+	private static void createUserAccount(String firstName, String lastName, String StudentID, String password, String email,
 			boolean isAdministrator) {
 		
 	} 
 	
 	
-	// A log in method that is called when user wishes to log in rather than register. 
+	
+	// A log-in method that is called when user wishes to log in rather than register. 
 	public static void LogInMenu() {
 		
 		Scanner input = new Scanner(System.in);
@@ -132,9 +151,19 @@ public class LogInProgram {
 	// The actual log in system method - it is called when the user wishes to log in as student
 	public static void LogInAsStudent() {
 		
-		String systemUserName = "admin";
-		String systemPassword = "1234";
-		
+			// Create a File instance
+			java.io.File file = new java.io.File("C:\\Users\\Zhagzi\\Documents\\userdatabase.txt");
+					
+			try {
+			// Create a Scanner to read data
+			Scanner readData = new Scanner(file);
+					
+						
+			String storeFirstName = readData.nextLine();
+			String storedLastName = readData.next();
+			String storedStudentID = readData.next();
+			String storedPassword = readData.next();
+			String storeEmail = readData.next();
 		
 		
 		// Used for holding input from the user
@@ -149,7 +178,8 @@ public class LogInProgram {
 		int counterTries = 0;
 		int numberOfTries = 3;
 		boolean loggedIn = false;
-		//do {
+		
+		
 		while ((counterTries < numberOfTries) && !loggedIn) {	
 			
 			
@@ -174,7 +204,7 @@ public class LogInProgram {
 		
 			
 			// Check if the password and username are correct (.length() or .equalsIgnoreCase() are both methods made for the String object. Chapter 4!
-			if (userName.equalsIgnoreCase(systemUserName) && password.equalsIgnoreCase(systemPassword)) {
+			if (userName.equalsIgnoreCase(storedStudentID) && password.equalsIgnoreCase(storedPassword)) {
 			// This is the true block
 			System.out.println("You have succesfully logged in...");
 			loggedIn = true;
@@ -193,6 +223,12 @@ public class LogInProgram {
 			
 		} // Closes the while loop for countOfTries
 				
-
+		
+		
+	} // Closes the try function
+	
+	catch (FileNotFoundException ex) {
+		System.out.println("File not found.");
 	}
+}
 }

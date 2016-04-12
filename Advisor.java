@@ -126,6 +126,7 @@ public class Advisor extends User {
 			 return foundLocation;//returns -1 if the booking is not found or the location otherwise
 			
 		}//findBooking
+
 			
 				 
 //		void rejectBooking(){

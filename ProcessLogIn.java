@@ -6,24 +6,24 @@ import java.util.Scanner;
 
 public class ProcessLogIn {
 	
+	static Advisor advisor1 = new Advisor();
+	static Advisor advisor2 = new Advisor();
+	static Advisor advisor3 = new Advisor();
+	static Advisor advisor4 = new Advisor();
+	static Advisor advisor5 = new Advisor();
+	static Advisor advisor6 = new Advisor();
+	static Advisor advisor7 = new Advisor();
+	static Advisor advisor8 = new Advisor();
+	static Advisor advisor9 = new Advisor();
+	
 	static boolean logInAsStudent = false;
 	static boolean logInAsAdvisor = false;
 	
 	
 	public static void main (String[] args) {
 	
-		Advisor advisor1 = new Advisor();
-		Advisor advisor2 = new Advisor();
-		Advisor advisor3 = new Advisor();
-		Advisor advisor4 = new Advisor();
-		Advisor advisor5 = new Advisor();
-		Advisor advisor6 = new Advisor();
-		Advisor advisor7 = new Advisor();
-		Advisor advisor8 = new Advisor();
-		Advisor advisor9 = new Advisor();
-
 		
-		//set the advisors data fields using methods (setmethod etc.)		
+		//creates the 9 advisor objects		
 		advisor1.setAdvisorID("111");
 		advisor1.setExpertise("Economics");
 		advisor1.setFirstName("Zaedo");

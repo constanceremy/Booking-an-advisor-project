@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Advisor extends User {
 		
-		public static String advisorID;
+		public String advisorID;
 		public String[] studentSlot = new String[4];
 		public String[] isBooked = new String[4];
 		public String expertise;
@@ -44,7 +44,7 @@ public class Advisor extends User {
 				
 		// getter methods
 		
-		static String getAdvisorID(){
+		String getAdvisorID(){
 			return advisorID;
 		}
 		

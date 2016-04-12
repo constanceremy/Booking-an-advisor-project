@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Advisor extends User {
 		
-		private String advisorID;
-		private String[] studentSlot = new String[4];
-		private String[] isBooked = new String[4];
-		private String expertise;
+		public static String advisorID;
+		public String[] studentSlot = new String[4];
+		public String[] isBooked = new String[4];
+		public String expertise;
 		
 		Advisor(){//constructor method called Room(). It is used to initialize states of the class
 			studentSlot[0] = "Slot 1";
@@ -19,6 +19,7 @@ public class Advisor extends User {
 			isBooked[1] = "0";
 			isBooked[2] = "0";
 			isBooked[3] = "0";
+		
 			
 			
 		}//constructor method Room()
@@ -43,7 +44,7 @@ public class Advisor extends User {
 				
 		// getter methods
 		
-		String getAdvisorID(){
+		static String getAdvisorID(){
 			return advisorID;
 		}
 		

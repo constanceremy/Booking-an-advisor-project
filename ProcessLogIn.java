@@ -83,7 +83,6 @@ public class ProcessLogIn {
 		try {
 			logInAndRegisterMethod();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -214,62 +213,61 @@ public class ProcessLogIn {
 	}	// closes logInAndRegisterMethod
 	
 	
-public static void createStudentAccount() throws IOException {
-		
-		// Create a file instance
-		java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
-		Scanner input = new Scanner(System.in);
-		//String lineSeparator = System.getProperty("line.separator");
-		
-		// Create a file
-		java.io.PrintWriter output = new java.io.PrintWriter(file);
-		
-	   System.out.println("Please enter your first name:");
-	   String firstName = input.next();
-	   output.println(firstName);
-	   
-	   
-	   System.out.println("Please enter your last name:");
-	   String lastName = input.next();
-	   output.println(lastName);
-	   
-	   System.out.println("Please enter your StudentID:");
-	   String StudentID = input.next();
-	   output.println(StudentID);
-	   
-	   System.out.println("Please enter a password:");
-	   String password = input.next();
-	   output.println(password);
-	   
-	   System.out.println("Please enter your email:");
-
-	   boolean emailValid = false; 
-	   String email; 
-	   
-	   //Here the system will check if a valid email was entered (an "@" is required)
-	   
-	   do {email = input.next();
-	      for (int i = 0; i<email.length(); i++) {
-	    	  if (email.charAt(i)=='@') {
-	    		  emailValid = true;
-	    		  output.print(email);
-	    	  }
-	    		
-	      }
-	      if(!emailValid) {
-	    	      System.out.println("Invalid Email - please type in a correct one containing '@': ");	      
-	      }
-	   } while (!emailValid);
-
-	      
-	      //while(!emailValid);
-	      System.out.println("Congratulations - your account has been created ");
-	      output.close();
-	      boolean canLogIn = true;
-	      if (canLogIn = true) {
-	    	  logInMenu();
-	      }
-} // closes createStudentAccount
+	public static void createStudentAccount() throws IOException {
+			
+			// Create a file instance
+			java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
+			Scanner input = new Scanner(System.in);
+			//String lineSeparator = System.getProperty("line.separator");
+			
+			// Create a file
+			java.io.PrintWriter output = new java.io.PrintWriter(file);
+			
+		   System.out.println("Please enter your first name:");
+		   String firstName = input.next();
+		   output.println(firstName);
+		   
+		   System.out.println("Please enter your last name:");
+		   String lastName = input.next();
+		   output.println(lastName);
+		   
+		   System.out.println("Please enter your StudentID:");
+		   String StudentID = input.next();
+		   output.println(StudentID);
+		   
+		   System.out.println("Please enter a password:");
+		   String password = input.next();
+		   output.println(password);
+		   
+		   System.out.println("Please enter your email:");
+	
+		   boolean emailValid = false; 
+		   String email; 
+		   
+		   //Here the system will check if a valid email was entered (an "@" is required)
+		   
+		   do {email = input.next();
+		      for (int i = 0; i<email.length(); i++) {
+		    	  if (email.charAt(i)=='@') {
+		    		  emailValid = true;
+		    		  output.print(email);
+		    	  }
+		    		
+		      }
+		      if(!emailValid) {
+		    	      System.out.println("Invalid Email - please type in a correct one containing '@': ");	      
+		      }
+		   } while (!emailValid);
+	
+		      
+		      //while(!emailValid);
+		      System.out.println("Congratulations - your account has been created ");
+		      output.close();
+		      boolean canLogIn = true;
+		      if (canLogIn = true) {
+		    	  logInMenu();
+		      }
+	} // closes createStudentAccount
 	
 	
 	// A log-in method that is called when user wishes to log in rather than register. 
@@ -313,179 +311,150 @@ public static void createStudentAccount() throws IOException {
 	} // closes logInMenu
 	
 	
-// the actual log in system method for the advisor
+	// the actual log in system method for the advisor
 	public static void logInAsAdvisor() {
 		String userName = "";
 		String password = "";
-		
-		Scanner input = new Scanner(System.in);
-		
 		int counterTries = 0;
 		int numberOfTries = 3;
 		boolean loggedIn = false;
 		
-			while ((counterTries < numberOfTries) && !loggedIn) {	
-			
-			// Telling the user how many tries it has left to enter valid username or password
-			if (counterTries == 1) {
-				System.out.println("OBS! You have 2 attempts left. ");
-			}
-			
-			else if (counterTries == 2) {
-				System.out.println("OBS! You have 1 attempt left. ");
-			}
-	
-			
-			counterTries++; // Counts the user tries to log-in, up till 3 attempts total
-			// Prompts user to enter log-in credentials
-			System.out.println("To log in as an advisor, please enter your username: ");
-			userName = input.nextLine();
+		Scanner input = new Scanner(System.in);
 		
+			while ((counterTries < numberOfTries) && !loggedIn) {	
+			// Telling the user how many tries it has left to enter valid username or password
+				if (counterTries == 1) {
+					System.out.println("OBS! You have 2 attempts left. ");
+				} else if (counterTries == 2) {
+					System.out.println("OBS! You have 1 attempt left. ");
+				}
+		
+				counterTries++; // Counts the user tries to log-in, up till 3 attempts total
+				// Prompts user to enter log-in credentials
+				System.out.println("To log in as an advisor, please enter your username: ");
+				userName = input.nextLine();
 			
-			System.out.println("Now enter your password: ");
-			password = input.nextLine();
-
-			
-			if (advisor1.getAdvisorID().equals(userName) && advisor1.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor2.getAdvisorID().equals(userName) && advisor2.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor3.getAdvisorID().equals(userName) && advisor3.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor4.getAdvisorID().equals(userName) && advisor4.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor5.getAdvisorID().equals(userName) && advisor5.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor6.getAdvisorID().equals(userName) && advisor6.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor7.getAdvisorID().equals(userName) && advisor7.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor8.getAdvisorID().equals(userName) && advisor8.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			} else if (advisor9.getAdvisorID().equals(userName) && advisor9.getPassword().equals(password)) {
-				loggedIn = true;
-				logInAsAdvisor = true;
-				System.out.println("You have successfully logged in...");
-			}
+				System.out.println("Now enter your password: ");
+				password = input.nextLine();
+	
+				if (advisor1.getAdvisorID().equals(userName) && advisor1.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor2.getAdvisorID().equals(userName) && advisor2.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor3.getAdvisorID().equals(userName) && advisor3.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor4.getAdvisorID().equals(userName) && advisor4.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor5.getAdvisorID().equals(userName) && advisor5.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor6.getAdvisorID().equals(userName) && advisor6.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor7.getAdvisorID().equals(userName) && advisor7.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor8.getAdvisorID().equals(userName) && advisor8.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else if (advisor9.getAdvisorID().equals(userName) && advisor9.getPassword().equals(password)) {
+					loggedIn = true;
+					logInAsAdvisor = true;
+					System.out.println("You have successfully logged in...");
+				} else {
+				// This is the false block, if either password or username doesn't fit
+				System.out.println("You entered a wrong username or password. ");
+					//if (counterTries == 1) {
+						//System.out.print("OBS! You have 2 tries left\n");
+				}
 				
-				
-			
-			
-			
-			else {
-			// This is the false block, if either password or username doesn't fit
-			System.out.println("You entered a wrong username or password. ");
-				//if (counterTries == 1) {
-					//System.out.print("OBS! You have 2 tries left\n");
-			}
-			
-			if (counterTries == 3) {
-				System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
-			}
+				if (counterTries == 3) {
+					System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
+				}
 			
 		} // Closes the while loop for countOfTries
-	} // end of logInAsAdvisor
-	
+	} // end of logInAsAdvisor Method
+
 	
 	// The actual log in system method - it is called when the user wishes to log in as student	
 	public static void logInAsStudent() {
 		
-			// Create a File instance
-			java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
+		// Create a File instance
+		java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
 					
-			try {
-			// Create a Scanner to read data
-			Scanner readData = new Scanner(file);
+		try {
+		// Create a Scanner to read data
+		Scanner readData = new Scanner(file);
 					
-						
-			String storeFirstName = readData.nextLine();
-			String storedLastName = readData.next();
-			String storedStudentID = readData.next();
-			String storedPassword = readData.next();
-			String storeEmail = readData.next();
-		
+		String storeFirstName = readData.nextLine();
+		String storedLastName = readData.next();
+		String storedStudentID = readData.next();
+		String storedPassword = readData.next();
+		String storeEmail = readData.next();
 		
 		// Used for holding input from the user
 		String userName = "";
 		String password = "";
-		
+		int counterTries = 0;
+		int numberOfTries = 3;
+		boolean loggedIn = false;
 		
 		// Create a scanner that reads the user input
 		Scanner input = new Scanner(System.in);
 		
-		
-		int counterTries = 0;
-		int numberOfTries = 3;
-		boolean loggedIn = false;
-			
-		while ((counterTries < numberOfTries) && !loggedIn) {	
-			
-			
-			// Telling the user how many tries it has left to enter valid username or password
-			if (counterTries == 1) {
-				System.out.println("OBS! You have 2 attempts left. ");
-			}
-			
-			else if (counterTries == 2) {
-				System.out.println("OBS! You have 1 attempt left. ");
-			}
-			
-		
-			counterTries++; // Counts the user tries to log-in, up till 3 attempts total
-			// Prompts user to enter log-in credentials
-			System.out.println("To log in as student, please enter your username: ");
-			userName = input.nextLine();
-		
-			
-			System.out.println("Now enter your password: ");
-			password = input.nextLine();
-		
-			
-			// Check if the password and username are correct (.length() or .equalsIgnoreCase() are both methods made for the String object. Chapter 4!
-			if (userName.equalsIgnoreCase(storedStudentID) && password.equalsIgnoreCase(storedPassword)) {
-			// This is the true block
-			System.out.println("You have successfully logged in...");
-			loggedIn = true;
-			boolean logInAsStudent = true;
-			}
-			
-			else {
-			// This is the false block, if either password or username doesn't fit
-			System.out.println("You entered a wrong username or password. ");
-				//if (counterTries == 1) {
-					//System.out.print("OBS! You have 2 tries left\n");
-			}
-			
-			if (counterTries == 3) {
-				System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
-			}
-			
-		} // Closes the while loop for countOfTries
+			while ((counterTries < numberOfTries) && !loggedIn) {	
+				// Telling the user how many tries it has left to enter valid username or password
+				if (counterTries == 1) {
+					System.out.println("OBS! You have 2 attempts left. ");
+				} else if (counterTries == 2) {
+					System.out.println("OBS! You have 1 attempt left. ");
+				}
 				
-		
-		
-			} // Closes the try function
+				counterTries++; // Counts the user tries to log-in, up till 3 attempts total
+				// Prompts user to enter log-in credentials
+				System.out.println("To log in as student, please enter your username: ");
+				userName = input.nextLine();
+			
+				System.out.println("Now enter your password: ");
+				password = input.nextLine();
+			
+				// Check if the password and username are correct (.length() or .equalsIgnoreCase() are both methods made for the String object. Chapter 4!
+				if (userName.equalsIgnoreCase(storedStudentID) && password.equalsIgnoreCase(storedPassword)) {
+				// This is the true block
+				System.out.println("You have successfully logged in...");
+				loggedIn = true;
+				boolean logInAsStudent = true;
+				} else {
+				// This is the false block, if either password or username doesn't fit
+				System.out.println("You entered a wrong username or password. ");
+					//if (counterTries == 1) {
+						//System.out.print("OBS! You have 2 tries left\n");
+				}
+				
+				if (counterTries == 3) {
+					System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
+				}
+				
+			} // Closes the while loop for countOfTries
+	
+		} // Closes the try function
 	
 			catch (FileNotFoundException ex) {
 				System.out.println("File not found.");
 			}
-	} // closes logInAsStudent
+	} // closes logInAsStudent Method
 
 
 	public static int firstMenuChoiceStudent() {
@@ -497,7 +466,7 @@ public static void createStudentAccount() throws IOException {
 				int menuChoiceStudent1 = input.nextInt();
 				return menuChoiceStudent1;
 	}//method firstMenuChoiceStudent
-	
+
 	public static int firstMenuChoiceAdvisor() {
 				System.out.println("Please select an option. Type 1, 2 or 3");
 				System.out.println("1: Accept booking by student");				
@@ -541,7 +510,5 @@ public static void createStudentAccount() throws IOException {
 		    case 9  :advisor9.cancelBooking(); break;
 			}//switch	
 		}//end of cancelBooking
-	
-
 
 } // end of Process

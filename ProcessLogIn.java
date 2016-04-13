@@ -78,8 +78,6 @@ public class ProcessLogIn {
 		advisor9.setLastName("Trump");
 		advisor9.setPassword("DonaldTrump");
 
-				
-	
 		try {
 			logInAndRegisterMethod();
 		} catch (IOException e) {
@@ -95,6 +93,7 @@ public class ProcessLogIn {
 				
 			 // print advisor choices based on student's topic
 				// need to get student topic in file (from registering) GET DATE IN FILE
+				// or when student logs in, create array with data from student. that way we can now his thesis topic.
 				// will be something like getStudentTopic etc.
 						if (advisor1.getExpertise().equals("Accounting")) {
 							System.out.println(advisor1.getFirstName() + " " + advisor1.getLastName());
@@ -380,7 +379,7 @@ public class ProcessLogIn {
 						//System.out.print("OBS! You have 2 tries left\n");
 				}
 				
-				if (counterTries == 3) {
+				if (counterTries == 3 && !loggedIn) {
 					System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
 				}
 			
@@ -443,7 +442,7 @@ public class ProcessLogIn {
 						//System.out.print("OBS! You have 2 tries left\n");
 				}
 				
-				if (counterTries == 3) {
+				if (counterTries == 3 && !loggedIn) {
 					System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
 				}
 				

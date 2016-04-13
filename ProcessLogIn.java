@@ -82,93 +82,6 @@ public class ProcessLogIn {
 			e.printStackTrace();
 		}
 		
-		while (logInAsStudent)		{	
-			// if student has booking already, show it here. GET DATA IN FILES
-			// should not be able to book another advisor if already has booking/has booking pending
-			int menuChoiceStudent1 = firstMenuChoiceStudent();
-			if (menuChoiceStudent1 == 1) {
-				System.out.println("These advisor are experts in your thesis topic:");
-				
-			 // print advisor choices based on student's topic
-				// need to get student topic in file (from registering) GET DATE IN FILE
-				// or when student logs in, create array with data from student. that way we can now his thesis topic.
-				// will be something like getStudentTopic etc.
-						if (advisor1.getExpertise().equals("Accounting")) {
-							System.out.println(advisor1.getFirstName() + " " + advisor1.getLastName());
-						}
-						if (advisor2.getExpertise().equals("Accounting")) {
-							System.out.println(advisor2.getFirstName() + " " + advisor2.getLastName());	
-						}
-						if (advisor3.getExpertise().equals("Accounting")) {
-							System.out.println(advisor3.getFirstName() + " " + advisor3.getLastName());
-						}
-						if (advisor4.getExpertise().equals("Accounting")) {
-							System.out.println(advisor4.getFirstName() + " " + advisor4.getLastName());
-						}
-						if (advisor5.getExpertise().equals("Accounting")) {
-							System.out.println(advisor5.getFirstName() + " " + advisor5.getLastName());
-						}
-						if (advisor6.getExpertise().equals("Accounting")) {
-							System.out.println(advisor6.getFirstName() + " " + advisor6.getLastName());
-						}
-						if (advisor7.getExpertise().equals("Accounting")) {
-							System.out.println(advisor7.getFirstName() + " " + advisor7.getLastName());
-						}
-						if (advisor8.getExpertise().equals("Accounting")) {
-							System.out.println(advisor8.getFirstName() + " " + advisor8.getLastName());
-						}
-						if (advisor9.getExpertise().equals("Accounting")) {
-							System.out.println(advisor9.getFirstName() + " " + advisor9.getLastName());
-						}
-				System.out.println("Which advisor would you like to book?");
-			
-				Scanner input = new Scanner(System.in);
-				int menuChoiceStudentBooking = input.nextInt();
-				if (menuChoiceStudentBooking == 1) {
-					// need to add all the other advisors
-					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudentBooking);
-				} else if (menuChoiceStudentBooking == 2) {
-					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudentBooking);
-				} else if (menuChoiceStudentBooking == 3) {
-					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudentBooking);
-				}
-			} else if (menuChoiceStudent1 == 2) {
-				// add all advisors
-				cancel(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudent1);
-			} else if (menuChoiceStudent1 == 3) {
-				System.out.println("You are now logged out from the Student area. Thank you for using our program!");
-		        boolean logInAsStudent = false;
-			}
-			
-		} // end of while logInAsStudent
-		
-		while (logInAsAdvisor)	{
-			int menuChoiceAdvisor1 = firstMenuChoiceAdvisor();
-
-			// Show if there are any outstanding booking (aka bookings that have not been answered yet)
-			// If yes, go through process. if not, say "You do not currently have any outstanding bookings. Thank you for checking!" + offer log out.
-			// aka log out method
-			if (menuChoiceAdvisor1 == 1) {
-				System.out.println("Your booking is confirmed.");
-				System.out.print("\n");
-				// here need to keep booking in the file and say that is had been confirmed
-				// ask if they want to log out?
-			} else if (menuChoiceAdvisor1 == 2) {
-				// here need to cancel the booking with which advisor logged in and which student booked (aka which time slot)
-				cancel(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceAdvisor1);
-				// does not do anything in file
-			} else if (menuChoiceAdvisor1 == 3) {
-				// log out method
-					System.out.println("You are now logged out from the Advisor area. Thank you for using our program!"); 
-			        logInAsAdvisor = false;
-			}
-			
-			
-		} //end of while logInAsAdvisor
-		
-		
-		
-		
 	} // END OF MAIN
 	
 	
@@ -398,38 +311,47 @@ public class ProcessLogIn {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Zaedo! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor2.getAdvisorID().equals(userName) && advisor2.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Constance! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor3.getAdvisorID().equals(userName) && advisor3.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Sean! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor4.getAdvisorID().equals(userName) && advisor4.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Victoria! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor5.getAdvisorID().equals(userName) && advisor5.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Janna! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor6.getAdvisorID().equals(userName) && advisor6.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Peter! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor7.getAdvisorID().equals(userName) && advisor7.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Julie! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor8.getAdvisorID().equals(userName) && advisor8.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Casper! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else if (advisor9.getAdvisorID().equals(userName) && advisor9.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
 					System.out.println("Welcome Donald! You have successfully logged in...");
+					whileLogInAsAdvisor();
 				} else {
 				// This is the false block, if either password or username doesn't fit
 				System.out.println("You entered a wrong username or password. ");
@@ -443,6 +365,32 @@ public class ProcessLogIn {
 			
 		} // Closes the while loop for countOfTries
 	} // end of logInAsAdvisor Method
+	
+	public static void whileLogInAsAdvisor() {
+		while (logInAsAdvisor)	{
+			int menuChoiceAdvisor1 = firstMenuChoiceAdvisor();
+	
+			// Show if there are any outstanding booking (aka bookings that have not been answered yet)
+			// If yes, go through process. if not, say "You do not currently have any outstanding bookings. Thank you for checking!" + offer log out.
+			// aka log out method
+			if (menuChoiceAdvisor1 == 1) {
+				System.out.println("Your booking is confirmed.");
+				System.out.print("\n");
+				// here need to keep booking in the file and say that is had been confirmed
+				// ask if they want to log out?
+			} else if (menuChoiceAdvisor1 == 2) {
+				// here need to cancel the booking with which advisor logged in and which student booked (aka which time slot)
+				cancel(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceAdvisor1);
+				// does not do anything in file
+			} else if (menuChoiceAdvisor1 == 3) {
+				// log out method
+					System.out.println("You are now logged out from the Advisor area. Thank you for using our program!"); 
+			        logInAsAdvisor = false;
+			}
+			
+			
+		} //end of while logInAsAdvisor
+	}
 
 	
 	// The actual log in system method - it is called when the user wishes to log in as student	
@@ -453,14 +401,23 @@ public class ProcessLogIn {
 					
 		try {
 		// Create a Scanner to read data
-		Scanner readData = new Scanner(file);
-					
-		String storeFirstName = readData.nextLine();
-		String storedLastName = readData.next();
-		String storedStudentID = readData.next();
-		String storedPassword = readData.next();
-		String storeEmail = readData.next();
+		Scanner readData = new Scanner(file); // Read data from a file
+		// readData.useDelimiter(",");
+		String storedStudentID = "";
+		String storedPassword = "";
 		
+		while (readData.hasNext()) {
+			storedStudentID = readData.next();
+			storedPassword = readData.next();
+			System.out.println(storedStudentID + " " + storedPassword);
+		}
+					
+//		String storeFirstName = readData.nextLine();
+//		String storedLastName = readData.next();
+//		String storedStudentID = readData.next();
+//		String storedPassword = readData.next();
+//		String storeEmail = readData.next();
+//		
 		// Used for holding input from the user
 		String userName = "";
 		String password = "";
@@ -493,6 +450,7 @@ public class ProcessLogIn {
 				System.out.println("You have successfully logged in...");
 				loggedIn = true;
 				boolean logInAsStudent = true;
+				whileLogInAsStudent();
 				} else {
 				// This is the false block, if either password or username doesn't fit
 				System.out.println("You entered a wrong username or password. ");
@@ -509,10 +467,72 @@ public class ProcessLogIn {
 		} // Closes the try function
 	
 			catch (FileNotFoundException ex) {
-				System.out.println("File not found.");
+				System.out.println("There has not been any student registration yet. Please register first in order to log in.");
+				logInAndRegisterMethod();
 			}
 	} // closes logInAsStudent Method
 
+	public static void whileLogInAsStudent() {
+		while (logInAsStudent)		{	
+			// if student has booking already, show it here. GET DATA IN FILES
+			// should not be able to book another advisor if already has booking/has booking pending
+			int menuChoiceStudent1 = firstMenuChoiceStudent();
+			if (menuChoiceStudent1 == 1) {
+				System.out.println("These advisor are experts in your thesis topic:");
+				
+			 // print advisor choices based on student's topic
+				// need to get student topic in file (from registering) GET DATE IN FILE
+				// or when student logs in, create array with data from student. that way we can now his thesis topic.
+				// will be something like getStudentTopic etc.
+						if (advisor1.getExpertise().equals("Accounting")) {
+							System.out.println(advisor1.getFirstName() + " " + advisor1.getLastName());
+						}
+						if (advisor2.getExpertise().equals("Accounting")) {
+							System.out.println(advisor2.getFirstName() + " " + advisor2.getLastName());	
+						}
+						if (advisor3.getExpertise().equals("Accounting")) {
+							System.out.println(advisor3.getFirstName() + " " + advisor3.getLastName());
+						}
+						if (advisor4.getExpertise().equals("Accounting")) {
+							System.out.println(advisor4.getFirstName() + " " + advisor4.getLastName());
+						}
+						if (advisor5.getExpertise().equals("Accounting")) {
+							System.out.println(advisor5.getFirstName() + " " + advisor5.getLastName());
+						}
+						if (advisor6.getExpertise().equals("Accounting")) {
+							System.out.println(advisor6.getFirstName() + " " + advisor6.getLastName());
+						}
+						if (advisor7.getExpertise().equals("Accounting")) {
+							System.out.println(advisor7.getFirstName() + " " + advisor7.getLastName());
+						}
+						if (advisor8.getExpertise().equals("Accounting")) {
+							System.out.println(advisor8.getFirstName() + " " + advisor8.getLastName());
+						}
+						if (advisor9.getExpertise().equals("Accounting")) {
+							System.out.println(advisor9.getFirstName() + " " + advisor9.getLastName());
+						}
+				System.out.println("Which advisor would you like to book?");
+			
+				Scanner input = new Scanner(System.in);
+				int menuChoiceStudentBooking = input.nextInt();
+				if (menuChoiceStudentBooking == 1) {
+					// need to add all the other advisors
+					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudentBooking);
+				} else if (menuChoiceStudentBooking == 2) {
+					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudentBooking);
+				} else if (menuChoiceStudentBooking == 3) {
+					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudentBooking);
+				}
+			} else if (menuChoiceStudent1 == 2) {
+				// add all advisors
+				cancel(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudent1);
+			} else if (menuChoiceStudent1 == 3) {
+				System.out.println("You are now logged out from the Student area. Thank you for using our program!");
+		        boolean logInAsStudent = false;
+			}
+			
+		} // end of while logInAsStudent
+	}
 
 	public static int firstMenuChoiceStudent() {
 			  	System.out.println("Please select an option. Type 1, 2 or 3");

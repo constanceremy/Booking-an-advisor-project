@@ -1,8 +1,7 @@
 package Project;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class ProcessLogIn {
 	
@@ -22,7 +21,6 @@ public class ProcessLogIn {
 	
 	public static void main (String[] args) {
 	
-		
 		//creates the 9 advisor objects		
 		advisor1.setAdvisorID("111");
 		advisor1.setExpertise("Economics");
@@ -220,57 +218,117 @@ public class ProcessLogIn {
 			//String lineSeparator = System.getProperty("line.separator");
 			
 			// Create a file
-			java.io.PrintWriter output = new java.io.PrintWriter(file);
+			try (PrintWriter output = new PrintWriter(new FileOutputStream(file, true)); ){
 			
+		Student student1 = new Student();
 		   System.out.println("Please enter your first name:");
-		   String firstName = input.next();
-		   output.println(firstName);
-		   
+		   student1.setFirstName(input.next());
+
 		   System.out.println("Please enter your last name:");
-		   String lastName = input.next();
-		   output.println(lastName);
-		   
+		   student1.setLastName(input.next());
+
 		   System.out.println("Please enter your StudentID:");
-		   String StudentID = input.next();
-		   output.println(StudentID);
+		   student1.setStudentID(input.nextLine());
+		   String studentID = input.nextLine();
+		   Boolean studentIDInput = false;
+		   while (!studentIDInput) {
+				   if (studentID.length() == 8
+					&& Character.isLetter(studentID.charAt(0)) 
+					&& Character.isLetter(studentID.charAt(1))
+					&& Character.isLetter(studentID.charAt(2))
+					&& Character.isLetter(studentID.charAt(3))
+					&& Character.isDigit(studentID.charAt(4))
+					&& Character.isDigit(studentID.charAt(5))
+					&& Character.isLetter(studentID.charAt(6))
+					&& Character.isLetter(studentID.charAt(7))) {
+					   studentIDInput = true;
+				   } else {
+					   System.out.println("Invalid studentID, please try again");
+					   studentID = input.nextLine();
+				   }
+		   }
 		   
-		   System.out.println("Please enter a password:");
-		   String password = input.next();
-		   output.println(password);
-		   
+		   System.out.println("Your password must contain only letters and numbers, no spaces, a minimum 8 characters and at least one number: ");
+		   boolean noWhite = false;
+		   boolean oneDigit = false;
+		   Scanner scan = new Scanner(System.in);
+		   String password = "";
+		   while (!noWhite ||  !oneDigit || password.length() < 8) {
+		     System.out.print("Enter your new password: ");
+		     password = scan.nextLine();
+		     noWhite = !password.contains(" ");
+		     oneDigit = password.matches(".*\\d.*");
+		   }
+
+		   System.out.println("Please choose a thesis topic");
+		   System.out.println("1. Economics");
+		   System.out.println("2. Finance");
+		   System.out.println("3. Accounting");
+		   System.out.println("4. Marketing");
+		   System.out.println("5. IT");
+		   Boolean topicDecision = false;
+		   String topicChoice = input.next();
+
+		   while (!topicDecision) {
+			   if (topicChoice.equals("1")) {
+				   student1.setStudentTopic("Economics");
+				   topicDecision = true;
+			   } else if (topicChoice.equals("2")) {
+				   student1.setStudentTopic("Finance");
+				   topicDecision = true;
+			   } else if (topicChoice.equals("3")) {
+				   student1.setStudentTopic("Accounting");
+				   topicDecision = true;
+			   } else if (topicChoice.equals("4")) {
+				   student1.setStudentTopic("Marketing");
+				   topicDecision = true;
+			   } else if (topicChoice.equals("5")) {
+				   student1.setStudentTopic("IT");
+				   topicDecision = true;
+			   } else {
+				   System.out.println("Invalid input, please try again");
+				   System.out.println("Please choose a thesis topic");
+				   System.out.println("1. Economics");
+				   System.out.println("2. Finance");
+				   System.out.println("3. Accounting");
+				   System.out.println("4. Marketing");
+				   System.out.println("5. IT");
+				   topicChoice = input.next();
+			   }
+		   } // end of while loop
+			   
 		   System.out.println("Please enter your email:");
-	
+		   student1.setStudentEmail(input.nextLine());
 		   boolean emailValid = false; 
-		   String email; 
+		   String email = input.nextLine();
 		   
 		   //Here the system will check if a valid email was entered (an "@" is required)
-		   
-		   do {email = input.next();
-		      for (int i = 0; i<email.length(); i++) {
-		    	  if (email.charAt(i)=='@') {
+		   do { 
+			   for (int j = 0; j<email.length(); j++) {
+		    	  if (email.charAt(j)=='@') {
 		    		  emailValid = true;
-		    		  output.print(email);
-		    	  }
-		    		
-		      }
+		    	  } // end of if to check that email has an @
+		      } // end of for loop
 		      if(!emailValid) {
-		    	      System.out.println("Invalid Email - please type in a correct one containing '@': ");	      
-		      }
-		   } while (!emailValid);
+		    	  System.out.println("Invalid email, please try again");	      
+		      } 
+		   } while (!emailValid); // end of do while
+		   
+		   output.println(studentID + " " + password + " " + student1.getFirstName() + " " + student1.getLastName() 
+		   					+ " " + student1.getStudentTopic() + " " + email);
 	
-		      
-		      //while(!emailValid);
-		      System.out.println("Congratulations - your account has been created ");
+		   System.out.println("Congratulations - your account has been created ");
 		      output.close();
 		      boolean canLogIn = true;
 		      if (canLogIn = true) {
 		    	  logInMenu();
 		      }
+			} // closes try
 	} // closes createStudentAccount
 	
 	
 	// A log-in method that is called when user wishes to log in rather than register. 
-	public static void logInMenu() {
+	public static void logInMenu() throws IOException {
 		
 		Scanner input = new Scanner(System.in);
 		System.out.println("\nChoose either 1 or 2 to proceed. \n1. Log in as advisor \n2. Log in as student ");
@@ -311,7 +369,7 @@ public class ProcessLogIn {
 	
 	
 	// the actual log in system method for the advisor
-	public static void logInAsAdvisor() {
+	public static void logInAsAdvisor() throws IOException {
 		String userName = "";
 		String password = "";
 		int counterTries = 0;
@@ -339,39 +397,39 @@ public class ProcessLogIn {
 				if (advisor1.getAdvisorID().equals(userName) && advisor1.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Zaedo! You have successfully logged in...");
 				} else if (advisor2.getAdvisorID().equals(userName) && advisor2.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Constance! You have successfully logged in...");
 				} else if (advisor3.getAdvisorID().equals(userName) && advisor3.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Sean! You have successfully logged in...");
 				} else if (advisor4.getAdvisorID().equals(userName) && advisor4.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Victoria! You have successfully logged in...");
 				} else if (advisor5.getAdvisorID().equals(userName) && advisor5.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Janna! You have successfully logged in...");
 				} else if (advisor6.getAdvisorID().equals(userName) && advisor6.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Peter! You have successfully logged in...");
 				} else if (advisor7.getAdvisorID().equals(userName) && advisor7.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Julie! You have successfully logged in...");
 				} else if (advisor8.getAdvisorID().equals(userName) && advisor8.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Casper! You have successfully logged in...");
 				} else if (advisor9.getAdvisorID().equals(userName) && advisor9.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
+					System.out.println("Welcome Donald! You have successfully logged in...");
 				} else {
 				// This is the false block, if either password or username doesn't fit
 				System.out.println("You entered a wrong username or password. ");
@@ -388,10 +446,10 @@ public class ProcessLogIn {
 
 	
 	// The actual log in system method - it is called when the user wishes to log in as student	
-	public static void logInAsStudent() {
+	public static void logInAsStudent() throws IOException {
 		
 		// Create a File instance
-		java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
+		File file = new File("/Users/constanceremy/Documents/workspace/user.txt");
 					
 		try {
 		// Create a Scanner to read data

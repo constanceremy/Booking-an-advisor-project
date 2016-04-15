@@ -129,7 +129,7 @@ public class Advisor extends User {
 		}//findBooking
 
 			
-				 
+
 //		void rejectBooking(){
 //			int found = findBookingToReject();//calls the findBooking method below to find the location of the booking
 //			if (found !=-1){

@@ -1,8 +1,7 @@
 package Project;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class ProcessLogIn {
 	
@@ -144,6 +143,8 @@ public class ProcessLogIn {
 			
 		} // end of while logInAsStudent
 		
+		
+		
 		while (logInAsAdvisor)	{
 			int menuChoiceAdvisor1 = firstMenuChoiceAdvisor();
 
@@ -166,12 +167,11 @@ public class ProcessLogIn {
 			}
 			
 			
-		} //end of while logInAsAdvisor
-		
-		
-		
+		} //end of while logInAsAdvisor	
 		
 	} // END OF MAIN
+	
+	
 	
 	
 	public static void logInAndRegisterMethod() throws IOException {
@@ -185,6 +185,7 @@ public class ProcessLogIn {
 		
 		Scanner input = new Scanner(System.in);
 		userChoiceOne = input.nextLine();
+		
 		boolean userDecisionOne = false;
 		
 		while (!userDecisionOne) {
@@ -212,74 +213,82 @@ public class ProcessLogIn {
 	}	// closes logInAndRegisterMethod
 	
 	
+	
+	
+	
+	
+	
 	public static void createStudentAccount() throws IOException {
 			
 			// Create a file instance
-			java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
+			File file = new File("C://Users//Zhagzi//users.txt");
 			Scanner input = new Scanner(System.in);
-			//String lineSeparator = System.getProperty("line.separator");
 			
-			// Create a file
-			java.io.PrintWriter output = new java.io.PrintWriter(file);
+			
+			// Create a object of type PrintWriter
+			try (PrintWriter output = new PrintWriter(new FileOutputStream(file, true)); ){
+				
 			
 		   System.out.println("Please enter your first name:");
 		   String firstName = input.next();
-		   output.println(firstName);
 		   
 		   System.out.println("Please enter your last name:");
 		   String lastName = input.next();
-		   output.println(lastName);
 		   
 		   System.out.println("Please enter your StudentID:");
-		   String StudentID = input.next();
-		   output.println(StudentID);
+		   String studentID = input.next();
 		   
 		   System.out.println("Please enter a password:");
 		   String password = input.next();
-		   output.println(password);
 		   
 		   System.out.println("Please enter your email:");
 	
 		   boolean emailValid = false; 
-		   String email; 
+		   String studentEmail; 
 		   
 		   //Here the system will check if a valid email was entered (an "@" is required)
 		   
-		   do {email = input.next();
-		      for (int i = 0; i<email.length(); i++) {
-		    	  if (email.charAt(i)=='@') {
+		   do {
+			  studentEmail = input.next();
+		      for (int i = 0; i<studentEmail.length(); i++) {
+		    	  if (studentEmail.charAt(i)=='@') {
 		    		  emailValid = true;
-		    		  output.print(email);
 		    	  }
 		    		
 		      }
 		      if(!emailValid) {
 		    	      System.out.println("Invalid Email - please type in a correct one containing '@': ");	      
 		      }
-		   } while (!emailValid);
+		   } while (!emailValid); // do-while loop
 	
+		   output.println(studentID + "," + password + "," + firstName + "," + lastName + "," + studentEmail);
 		      
-		      //while(!emailValid);
 		      System.out.println("Congratulations - your account has been created ");
 		      output.close();
 		      boolean canLogIn = true;
 		      if (canLogIn = true) {
 		    	  logInMenu();
 		      }
-	} // closes createStudentAccount
+			} // Closes try
+	} // Closes createStudentAccount
+	
+
+	
+	
 	
 	
 	// A log-in method that is called when user wishes to log in rather than register. 
-	public static void logInMenu() {
+	public static void logInMenu() throws IOException {
 		
 		Scanner input = new Scanner(System.in);
-		System.out.println("\nChoose either 1 or 2 to proceed. \n1. Log in as advisor \n2. Log in as student ");
+		System.out.println("\nChoose either 1 or 2 to proceed. \n1. Log in as advisor \n2. Log in as student \n3. Go Back ");
 		String userChoiceTwo; // Declaring user's choice as early on as possible
 		boolean userDecisionTwo = false;
 		
 		
 		String logInMenuAdvisor = "1"; //  Choose option 1 to log in as advisor
 		String logInMenuStudent = "2"; // Choose option 2 to log in as student
+		String logInMenuGoBack = "3"; // Option for user to go back to Log in or Register menu
 		String logInMenuNoInput = ""; // This option is if the user doesn't input anything
 		
 		userChoiceTwo = input.nextLine();
@@ -295,19 +304,27 @@ public class ProcessLogIn {
 				userDecisionTwo = true;
 			}
 			
+			else if (userChoiceTwo.equals(logInMenuGoBack)) {
+				logInAndRegisterMethod();
+			}
+			
 			else if (userChoiceTwo.equals(logInMenuNoInput)) { 
-				System.out.println("No input recognized. Please try again.\n1. Log-in \n2. Register (Students) "); 
+				System.out.println("No input recognized. Please try again.\n1. Log in as advisor \n2. Log in as student \n3. Go Back "); 
 				userChoiceTwo = input.nextLine();
 			}
 			
 			else {
-				System.out.println("Incorrect input. Please try again.\n1. Log in as advisor \n2. Log in as student ");
+				System.out.println("Incorrect input. Please try again.\n1. Log in as advisor \n2. Log in as student \n3. Go Back ");
 				userChoiceTwo = input.nextLine();
 			}
 			
 		} // closes while loop
 		
 	} // closes logInMenu
+	
+	
+	
+	
 	
 	
 	// the actual log in system method for the advisor
@@ -380,28 +397,40 @@ public class ProcessLogIn {
 				}
 				
 				if (counterTries == 3 && !loggedIn) {
-					System.out.println("You've unsuccesfully logged in for 3 attempts, the program is closed now. ");
+					System.out.println("You've unsuccesfully tried to log in, in 3 attempts. Tehe program is closed now. ");
 				}
 			
 		} // Closes the while loop for countOfTries
 	} // end of logInAsAdvisor Method
 
 	
+	
+	
+	
+	
+	
 	// The actual log in system method - it is called when the user wishes to log in as student	
-	public static void logInAsStudent() {
+	static void logInAsStudent() throws IOException {
 		
 		// Create a File instance
-		java.io.File file = new java.io.File("/Users/constanceremy/Documents/workspace/user.txt");
-					
-		try {
-		// Create a Scanner to read data
-		Scanner readData = new Scanner(file);
-					
-		String storeFirstName = readData.nextLine();
-		String storedLastName = readData.next();
-		String storedStudentID = readData.next();
-		String storedPassword = readData.next();
-		String storeEmail = readData.next();
+		File file = new File("C://Users//Zhagzi//users.txt");
+		
+		// Create a try-catch exception to avoid error: FileNotFoundException
+		try (Scanner readData = new Scanner(file);) { // Read data from a file
+			//readData.useDelimiter(",");
+		String storedStudentID = "";
+		String storedPassword = "";
+		
+		if (readData.hasNext()) {			
+			
+			storedStudentID = readData.nextLine();
+			storedPassword = readData.nextLine();
+			System.out.println(storedStudentID + " " + storedPassword);
+		
+		} 	
+			
+		
+			
 		
 		// Used for holding input from the user
 		String userName = "";
@@ -449,12 +478,20 @@ public class ProcessLogIn {
 			} // Closes the while loop for countOfTries
 	
 		} // Closes the try function
-	
-			catch (FileNotFoundException ex) {
-				System.out.println("File not found.");
-			}
+		
+		catch (FileNotFoundException ex) {
+			System.out.println("There has not been any student registration yet, please register first in order to log-in. ");
+			logInAndRegisterMethod();
+		}
+		
 	} // closes logInAsStudent Method
 
+	
+	
+	
+	
+	
+	
 
 	public static int firstMenuChoiceStudent() {
 			  	System.out.println("Please select an option. Type 1, 2 or 3");
@@ -466,6 +503,11 @@ public class ProcessLogIn {
 				return menuChoiceStudent1;
 	}//method firstMenuChoiceStudent
 
+	
+	
+	
+	
+	
 	public static int firstMenuChoiceAdvisor() {
 				System.out.println("Please select an option. Type 1, 2 or 3");
 				System.out.println("1: Accept booking by student");				
@@ -475,6 +517,11 @@ public class ProcessLogIn {
 				int menuChoiceAdvisor1 = input.nextInt();
 				return menuChoiceAdvisor1;
 	} // method firstMenuChoiceAdvisor
+	
+	
+	
+	
+	
 	
 	public static void booking(Advisor advisor1, Advisor advisor2, Advisor advisor3, Advisor advisor4, Advisor advisor5, 
 			Advisor advisor6, Advisor advisor7, Advisor advisor8, Advisor advisor9, int advisorChoice){
@@ -492,6 +539,10 @@ public class ProcessLogIn {
 			    case 9  :advisor9.makeBooking(); break;
 			}//switch
 	}//end of makeBooking
+	
+	
+	
+	
 	
 	public static void cancel(Advisor advisor1, Advisor advisor2, Advisor advisor3, Advisor advisor4, Advisor advisor5, 
 			Advisor advisor6, Advisor advisor7, Advisor advisor8, Advisor advisor9, int advisorChoice){

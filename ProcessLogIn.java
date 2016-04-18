@@ -6,7 +6,10 @@ import java.io.*;
 public class ProcessLogIn {
 	
 	private static ArrayList<String[]> users = new ArrayList<String[]>();
+	static ArrayList<String[]> bookingList = new ArrayList<String[]>();
+	
 	static String studentUsername = "";
+	static String advisorID = "";
 	
 	static Advisor advisor1 = new Advisor();
 	static Advisor advisor2 = new Advisor();
@@ -157,7 +160,7 @@ public class ProcessLogIn {
 	public static void createStudentAccount() {
 			
 			// Create a file instance
-			File file = new File("C://Users//Zhagzi//users.txt");
+			File file = new File("users.txt");
 			Scanner input = new Scanner(System.in);
 			
 			
@@ -228,7 +231,7 @@ public class ProcessLogIn {
 			else if (userChoiceTwo.equals(logInMenuStudent)) {
 				
 				try {
-				File file= new File("C://Users//Zhagzi//users.txt");
+				File file= new File("users.txt");
 				Scanner readData = new Scanner(file);
 				logInAsStudent();
 				userDecisionTwo = true;
@@ -338,24 +341,18 @@ public class ProcessLogIn {
 public static void whileLogInAsAdvisor() {
 		
 		while (logInAsAdvisor)	{
-			int menuChoiceAdvisor1 = firstMenuChoiceAdvisor();
-
+			String menuChoiceAdvisor = MenuChoiceAdvisor();
 			// Show if there are any outstanding booking (aka bookings that have not been answered yet)
 			// If yes, go through process. if not, say "You do not currently have any outstanding bookings. Thank you for checking!" + offer log out.
 			// aka log out method
-			if (menuChoiceAdvisor1 == 1) {
-				System.out.println("Your booking is confirmed.");
-				System.out.print("\n");
-				// here need to keep booking in the file and say that is had been confirmed
-				// ask if they want to log out?
-			} else if (menuChoiceAdvisor1 == 2) {
-				// here need to cancel the booking with which advisor logged in and which student booked (aka which time slot)
-				cancel(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceAdvisor1);
-				// does not do anything in file
-			} else if (menuChoiceAdvisor1 == 3) {
+			if (menuChoiceAdvisor == "1") {
 				// log out method
 					System.out.println("You are now logged out from the Advisor area. Thank you for using our program!"); 
 			        logInAsAdvisor = false;
+			} else {
+				System.out.println("Invalid input. Please try again \n");
+				Scanner input = new Scanner(System.in);
+				menuChoiceAdvisor = input.nextLine();
 			}
 
 		} // End of while-loop
@@ -407,6 +404,47 @@ public static void whileLogInAsAdvisor() {
 
 	
 	
+	public static void studentLoggedInMenuOne() {
+		
+		boolean correctInput = false;
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("-------------------------------");
+		System.out.println("Welcome to EazyBook");
+		System.out.println("-------------------------------");
+		
+		System.out.println("Please select an option. Type 1, 2 or 3 \n1. Make a new booking with an advisor \n2. Cancel a booking \n3. Log out");	
+		String menuChoiceStudent1 = input.nextLine();
+		
+		while (!correctInput) {
+			
+			if (menuChoiceStudent1.equals("1")) {
+				logInAsStudent = true;
+				whileLogInAsStudent();
+				correctInput = true;
+				
+			}
+			
+			else if (menuChoiceStudent1.equals("2")) {
+				System.out.println("Function not ready yet");
+				logInAsStudent = true;
+				cancelABooking();
+				menuChoiceStudent1 = input.nextLine();
+			}
+			
+			else if (menuChoiceStudent1.equals("3")) {
+				logInAndRegisterMethod();
+				correctInput = true;
+			}
+			
+			else {
+				System.out.println("Invalid input. Please try again \n1. Make a new booking with an advisor \n2. Cancel a booking \n3. Log out");
+				menuChoiceStudent1 = input.nextLine();
+			}
+			
+		}// While
+	}// end of studentLoggedInMenuOne
+	
 	
 	
 	public static void whileLogInAsStudent() {
@@ -417,6 +455,8 @@ public static void whileLogInAsAdvisor() {
 		System.out.println("-----------------------------------------------");
 		System.out.println("Current logged in StudentID is: " + studentUsername);
 		System.out.println("-----------------------------------------------");
+		
+		// here need options to cancel booking!!!!
 
 		
 	 // print advisor choices based on student's topic
@@ -446,53 +486,58 @@ public static void whileLogInAsAdvisor() {
 		while (logInAsStudent)		{	
 			// if student has booking already, show it here. GET DATA IN ARRAYLIST
 			// should not be able to book another advisor if already has booking/has booking pending
-			
-								
-				
-				
 				
 				if (menuStudentChoiceOfAdvisor.equals("1")) {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "111";
 					break;
-					} 
+				}
 				
 				else if (menuStudentChoiceOfAdvisor.equals("2"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "222";
 					break;
 					} 
 				
 				else if (menuStudentChoiceOfAdvisor.equals("3"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "333";
 					break;
 					}
 				
 				else if (menuStudentChoiceOfAdvisor.equals("4"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "444";
 					break;
 					} 
 				
 				else if (menuStudentChoiceOfAdvisor.equals("5"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "555";
 					break;
 					}
 				
 				else if (menuStudentChoiceOfAdvisor.equals("6"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "666";
 					break;
 					} 
 				
 				else if (menuStudentChoiceOfAdvisor.equals("7"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "777";
 					break;
 					}
 
 				else if (menuStudentChoiceOfAdvisor.equals("8"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "888";
 					break;
 					} 
 				
 				else if (menuStudentChoiceOfAdvisor.equals("9"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
+					advisorID = "999";
 					break;
 					}
 				
@@ -519,6 +564,7 @@ public static void whileLogInAsAdvisor() {
 					menuStudentChoiceOfAdvisor = input.nextLine();
 				}
 				
+				
 //				else if (menuChoiceStudent1 == 2) {
 //				// add all advisors
 //				cancel(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuChoiceStudent1);
@@ -530,55 +576,27 @@ public static void whileLogInAsAdvisor() {
 //					}
 			
 		}// End of while-loop
+		
+		studentLoggedInMenuOne();
+
+		
 	}// End of whileLogInAsStudent method
 	
-	
-	
+	public static void cancelABooking() {
+	}
 	
 
 
 	
-	public static void studentLoggedInMenuOne() {
-		
-		boolean correctInput = false;
-		Scanner input = new Scanner(System.in);
-		String menuOptionBooking = "1";
-		String menuOptionCancel = "2";
-		String menuOptionLogOut = "3";
-		
-		System.out.println("-------------------------------");
-		System.out.println("Welcome to EazyBook");
-		System.out.println("-------------------------------");
-		
-		System.out.println("Please select an option. Type 1, 2 or 3 \n1. Make a new booking with an advisor \n2. Cancel a booking \n3. Log out");	
-		String menuChoiceStudent1 = input.nextLine();
-		
-		while (!correctInput) {
-			
-			if (menuChoiceStudent1.equals("1")) {
-				logInAsStudent = true;
-				whileLogInAsStudent();
-				correctInput = true;
-				
-			}
-			
-			else if (menuChoiceStudent1.equals("2")) {
-				System.out.println("Function not ready yet");
-				menuChoiceStudent1 = input.nextLine();
-			}
-			
-			else if (menuChoiceStudent1.equals("3")) {
-				logInAndRegisterMethod();
-				correctInput = true;
-			}
-			
-			else {
-				System.out.println("Invalid input. Please try again \n1. Make a new booking with an advisor \n2. Cancel a booking \n3. Log out");
-				menuChoiceStudent1 = input.nextLine();
-			}
-			
-		}// While
-	}// logInAsStudent
+	public static void addBooking(String studentUsername, String advisorID, String studentSlot) {
+		String[] booking = { studentUsername, advisorID, studentSlot };
+		bookingList.add(booking);
+	}
+	
+
+
+	
+
 		
 	
 	
@@ -604,14 +622,13 @@ public static void whileLogInAsAdvisor() {
 	
 	
 	// Menu once the advisor has logged in
-	public static int firstMenuChoiceAdvisor() {
-				System.out.println("Please select an option. Type 1, 2 or 3");
-				System.out.println("1: Accept booking by student");				
-				System.out.println("2: Reject booking by student");
-				System.out.println("3: Log out");
+	public static String MenuChoiceAdvisor() {
+				System.out.println("DO YOU HAVE A BOOKING / MUTLIPLE BOOKINGS");
+				System.out.println("Please select an option. Type 1");
+				System.out.println("1: Log out");
 				Scanner input = new Scanner(System.in);
-				int menuChoiceAdvisor1 = input.nextInt();
-				return menuChoiceAdvisor1;
+				String menuChoiceAdvisor = input.nextLine();
+				return menuChoiceAdvisor;
 	} // method firstMenuChoiceAdvisor
 	
 	
@@ -642,20 +659,31 @@ public static void whileLogInAsAdvisor() {
 	
 	
 	public static void cancel(Advisor advisor1, Advisor advisor2, Advisor advisor3, Advisor advisor4, Advisor advisor5, 
-			Advisor advisor6, Advisor advisor7, Advisor advisor8, Advisor advisor9, int advisorChoice){
+			Advisor advisor6, Advisor advisor7, Advisor advisor8, Advisor advisor9, String advisorChoice){
 		/*This method cancels the room slot by calling method from the Room class called "canceBooking() on the three objects. Three reference variable of Room e.g room1, room2 and room3 is sent 
 		 to this method and one integer variable which is the type of room e.g 1 is for Extreme programming	*/
 			switch (advisorChoice){
-			case 1 : advisor1.cancelBooking(); break;
-		    case 2  :advisor2.cancelBooking(); break;
-		    case 3  :advisor3.cancelBooking(); break;
-		    case 4  :advisor4.cancelBooking(); break;
-		    case 5  :advisor5.cancelBooking(); break;
-		    case 6  :advisor6.cancelBooking(); break;
-		    case 7  :advisor7.cancelBooking(); break;
-		    case 8  :advisor8.cancelBooking(); break;
-		    case 9  :advisor9.cancelBooking(); break;
+			case "1" :advisor1.cancelBooking(); break;
+		    case "2" :advisor2.cancelBooking(); break;
+		    case "3" :advisor3.cancelBooking(); break;
+		    case "4" :advisor4.cancelBooking(); break;
+		    case "5" :advisor5.cancelBooking(); break;
+		    case "6" :advisor6.cancelBooking(); break;
+		    case "7" :advisor7.cancelBooking(); break;
+		    case "8" :advisor8.cancelBooking(); break;
+		    case "9" :advisor9.cancelBooking(); break;
 			}//switch	
 		}//end of cancelBooking
+
+
+
+
+
+
+
+
+
+
+
 
 } // end of Process

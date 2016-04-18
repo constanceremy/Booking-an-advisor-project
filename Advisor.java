@@ -1,9 +1,11 @@
 package Project;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.lang.*;
 
 public class Advisor extends User {
-		
+			
 		public String advisorID;
 		public String[] studentSlot = new String[4];
 		public String[] isBooked = new String[4];
@@ -20,7 +22,7 @@ public class Advisor extends User {
 			isBooked[2] = "0";
 			isBooked[3] = "0";
 		
-			
+			int emptySlot = -1;
 			
 		}//constructor method Room()
 		
@@ -60,17 +62,20 @@ public class Advisor extends User {
 			return expertise;
 		}
 		
+		
 		void makeBooking(){
 			   /*This is a void method which first finds an empty slot which is the location of the array
 			    isBooked*/
-			    
+						 
 					int emptySlot = -1; /*this variable is initialised so if it does not change we know code 
 					below has not found an emptyslot*/
 			        emptySlot = findEmptySlot();
 					if(emptySlot != -1){ // emptyslot -1 means nothing is available
 						System.out.println("There is an available slot for this advisor : " + getStudentSlot()[emptySlot]);
 						System.out.println("This slot is now booked for you");
-						System.out.print("\n");
+						ProcessLogIn.addBooking(ProcessLogIn.studentUsername, ProcessLogIn.advisorID, getStudentSlot()[emptySlot]);
+							for(int i = 0; i < ProcessLogIn.bookingList.size(); i++)
+							System.out.println((ProcessLogIn.bookingList.get(i)).toString());// want to print the array list to see it temp
 						isBooked[emptySlot] = "1";//makes the booking for the first available slot
 					}
 					else //empty slot has not been found
@@ -127,47 +132,6 @@ public class Advisor extends User {
 			 return foundLocation;//returns -1 if the booking is not found or the location otherwise
 			
 		}//findBooking
-
-			
-
-//		void rejectBooking(){
-//			int found = findBookingToReject();//calls the findBooking method below to find the location of the booking
-//			if (found !=-1){
-//					isBooked[found] = "0";//sets it to unbooked i.e "0"
-//				System.out.println("Your booking of advisor "+ getAdvisorID()+" \n"
-//						+ " is now cancelled");
-//			}	//if
-//			
-//		}//cancelBooking
-//		
-//		int findBookingToReject(){
-//			//This is a method that returns the index of array isBooked where the booking is found
-//			Scanner input = new Scanner(System.in);
-//			String confirmation = "no";
-//			int foundLocation = -1;
-//			 for (int i = 0; i<getStudentSlot().length; i++){
-//				   if (isBooked[i].equalsIgnoreCase("1")){/*this outer if condition only applies when 
-//				   there is a booking i.e iBooked[i] is "1"*/
-//				    System.out.print("Is this your booking: type yes/no "+ getStudentSlot()[i] + " ");
-//					confirmation = input.nextLine();
-//				  
-//				     if (confirmation.equalsIgnoreCase("yes")){
-//						foundLocation= i;//find the location i if the user confirms that it is his/her booking
-//					 break;//breaks out of the for loop if the booking is found
-//					}//if
-//				      
-//				  }//outer if
-//			   }//for 
-//
-//		 
-//				 if (foundLocation == -1){/*this variable remains -1 if either there is no booking or user 
-//					confirms it is not heir booking*/
-//						System.out.println("Sorry your booking has not been found");
-//				 }//if
-//				 else System.out.println("Your booking has been found at "+ (foundLocation+1) + "location");
-//				 return foundLocation;//returns -1 if the booking is not found or the location otherwise
-//				
-//			}//findBooking
 
 		
 } // end of advisor

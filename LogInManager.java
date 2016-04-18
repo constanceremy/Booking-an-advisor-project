@@ -13,7 +13,7 @@ public class LogInManager {
 	public static void loadFile() {
 		try {	
 		
-		File file= new File("C://Users//Zhagzi//users.txt");
+		File file= new File("users.txt");
 		Scanner readData = new Scanner(file);
 		String S1 = "";
 		

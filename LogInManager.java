@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 
 public class LogInManager {
-	private static ArrayList<String[]> users = new ArrayList<String[]>();
+	static ArrayList<String[]> users = new ArrayList<String[]>();
 	
 	LogInManager() {
 		loadFile();
@@ -63,7 +63,18 @@ public class LogInManager {
 			
 		}
 		
+		public static boolean authorize(String studentID) {
+			boolean result = false;
+			
+			for (String[] account : users) {
+				if (account[0].equals(studentID)) {
+					result = true;
+				}
+			}
 		
+			return result;
+			
+		}
 		
 		
 	

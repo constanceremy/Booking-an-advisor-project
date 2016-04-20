@@ -8,13 +8,14 @@ public class ProcessLogIn {
 	private static ArrayList<String[]> users = new ArrayList<String[]>();
 	public static ArrayList<String[]> bookingList = new ArrayList<String[]>();
 	
+	
 	static String studentUsername;
-//	static String studentFirstName;
-//	static String studentLastName;
+	static String studentFullName;
 	static String advisorID = "";
 	static String currentAdvisorID = "";
 	static String currentAdvisorFirstName = "";
 	static String currentAdvisorLastName = "";
+	
 
 	
 	static Advisor advisor1 = new Advisor();
@@ -26,6 +27,7 @@ public class ProcessLogIn {
 	static Advisor advisor7 = new Advisor();
 	static Advisor advisor8 = new Advisor();
 	static Advisor advisor9 = new Advisor();
+	
 	
 	static boolean logInAsStudent = false;
 	static boolean logInAsAdvisor = false;
@@ -65,9 +67,7 @@ public class ProcessLogIn {
 		logInAndRegisterMethod();
 		
 
-	
-	
-} // END OF MAIN
+	} // END OF MAIN
 	
 	
 	
@@ -206,7 +206,7 @@ public class ProcessLogIn {
 		userChoiceTwo = input.nextLine();
 		
 		while (!userDecisionTwo) { // While loop for userChoiceTwo makes the menu appear until choice is valid
-			if (userChoiceTwo.equals(logInMenuAdvisor)) {
+			if (userChoiceTwo.equals("1")) {
 				logInAsAdvisor();
 				userDecisionTwo = true;
 			}
@@ -244,6 +244,8 @@ public class ProcessLogIn {
 		} // closes while loop
 		
 	} // closes logInMenu
+	
+	
 	
 	
 	
@@ -339,44 +341,45 @@ public class ProcessLogIn {
 	
 	
 	
-public static void whileLogInAsAdvisor() {
 	
-	Scanner input = new Scanner(System.in);
+	
+	public static void whileLogInAsAdvisor() {
+	
+		Scanner input = new Scanner(System.in);
 		
-		while (logInAsAdvisor)	{
+			while (logInAsAdvisor)	{
 
 			
-			for(int i = 0; i < bookingList.size(); i++) {
-				if (bookingList.get(i)[1].equals(currentAdvisorID)) {
-					System.out.println("You have a booking with " + bookingList.get(i)[0]);
-				}
-				else {
+				for(int i = 0; i < bookingList.size(); i++) {
+					if (bookingList.get(i)[1].equals(currentAdvisorID)) {
+						System.out.println("You have a booking with " + bookingList.get(i)[5] + ", studentID: " + bookingList.get(i)[0]);
+					}
+					else {
+						System.out.println("You do not have any bookings. Please come back later.");
+					}
+					}
+			
+				if ((bookingList.size()) == 0) {
 					System.out.println("You do not have any bookings. Please come back later.");
 				}
-			}
 			
-			if ((bookingList.size()) == 0) {
-				System.out.println("You do not have any bookings. Please come back later.");
-			}
-			
-			System.out.println("When you are done reviewing your bookings, please select option 1");
-			System.out.println("1: Log out");
-			String menuChoiceAdvisor = input.nextLine();
-			
-			if (menuChoiceAdvisor.equals("1")) {
-					System.out.println("You are now logged out from the Advisor area. Thank you for using our program!"); 
-			        logInAsAdvisor = false;
-			        logInAndRegisterMethod();
-			} 
-			else {
-				System.out.println("Invalid input. Please try again. Select option 1");
+				System.out.println("When you are done reviewing your bookings, please select option 1");
 				System.out.println("1: Log out");
-				menuChoiceAdvisor = input.nextLine();
-
-			}
+				String menuChoiceAdvisor = input.nextLine();
+			
+				if (menuChoiceAdvisor.equals("1")) {
+						System.out.println("You are now logged out from the Advisor area. Thank you for using our program!"); 
+						logInAsAdvisor = false;
+						logInAndRegisterMethod();
+				} 
+				else {
+					System.out.println("Invalid input. Please try again. Select option 1");
+					System.out.println("1: Log out");
+					menuChoiceAdvisor = input.nextLine();
+				}
 			
 
-		} // End of while-loop
+		}// End of while-loop
 	}// End of whileLogInAsAdvisor method
 	
 
@@ -388,10 +391,10 @@ public static void whileLogInAsAdvisor() {
 	public static void logInAsStudent() {
 		String studentChooseToRegister = "2";
 	
-		LogInManager loginManager = new LogInManager();
+		LogInManager loginManager = new LogInManager(); 
 		 
 		 
-		 Scanner input = new Scanner(System.in);
+		 Scanner input = new Scanner(System.in); 
 		 
 		 System.out.println("-------------------------------------------");
 		 System.out.println("OBS! If you haven't registered yet, press 2" );
@@ -450,6 +453,13 @@ public static void whileLogInAsAdvisor() {
 	
 	
 	}// closes logInAsStudent Method
+	
+	
+	
+	
+	
+	
+	
 
 	public static boolean verifyStudentBooking(String studentUsername) {
 		boolean result = false;
@@ -462,22 +472,29 @@ public static void whileLogInAsAdvisor() {
 	}
 	
 	
+	
+	
+	
+	
+	
 	public static void studentLoggedInMenu() {
 		
-		boolean correctInput = false;
 		Scanner input = new Scanner(System.in);
+		String menuChoiceStudent1;
+		boolean correctInput = false;
 		
 		System.out.println("-------------------------------");
-		System.out.println("Welcome to EazyBook");
+		System.out.println("Welcome to EazyBook - " + studentFullName);
 		System.out.println("-------------------------------");
+		
+
 		
 		
 		while (!correctInput) {
 			
 			if (!verifyStudentBooking(studentUsername)) {
-				
 				System.out.println("Please select an option. Type 1, or 2 \n1. Make a new booking with an advisor \n2. Log out");	
-				String menuChoiceStudent1 = input.nextLine();
+				menuChoiceStudent1 = input.nextLine();
 
 				
 				if (menuChoiceStudent1.equals("1")) {
@@ -488,49 +505,55 @@ public static void whileLogInAsAdvisor() {
 				} else if (menuChoiceStudent1.equals("2")) {
 					logInAndRegisterMethod();
 					correctInput = true;
+					
 				} else {
 					System.out.println("Invalid input. Please try again \n1. Make a new booking with an advisor \n2. Log out");
 					menuChoiceStudent1 = input.nextLine();
 				}
-			}
+			}// If verifyStudentBooking
+		
 			
 			else {
 				
-				for(int i = 0; i < bookingList.size(); i++) {
-				System.out.println("Booking: student is: " + bookingList.get(i)[0] +  " and advisorID is: " + bookingList.get(i)[1] + 
-						"and the name is " + bookingList.get(i)[2] + bookingList.get(i)[3] + " at time Slot: " + bookingList.get(i)[4]);
-				}// want to print the array list to see it temp
+//				for(int i = 0; i < bookingList.size(); i++) {
+//				System.out.println("Booking: student is: " + bookingList.get(i)[5] +  " and advisorID is: " + bookingList.get(i)[1] + 
+//						"and the name is " + bookingList.get(i)[2] + bookingList.get(i)[3] + " at time Slot: " + bookingList.get(i)[4]);
+//				}// want to print the array list to see it temp
 				
 				
 				for (int i = 0; i < bookingList.size(); i++) {
 					if (studentUsername.equals(bookingList.get(i)[0])) {
-						System.out.println("You have a booking with " + bookingList.get(i)[2] + " " + bookingList.get(i)[3]);
+						System.out.println("You have a booking with advisor " + bookingList.get(i)[2] + " " + bookingList.get(i)[3]);
 					}
 				}
 				
 				System.out.println("Please select an option. Type 1, or 2 \n1. Cancel my booking \n2. Log out");	
-				String menuChoiceStudent1 = input.nextLine();
+				menuChoiceStudent1 = input.nextLine();
 
 
-				if (menuChoiceStudent1.equals("1")) {
-				logInAsStudent = true;
-				cancelABooking();
-//				menuChoiceStudent1 = input.nextLine();
-				}
+					if (menuChoiceStudent1.equals("1")) {
+						logInAsStudent = true;
+						cancelABooking();
+//						menuChoiceStudent1 = input.nextLine();
+					}
 				
-				else if (menuChoiceStudent1.equals("2")) {
-					logInAndRegisterMethod();
-					correctInput = true;
-				}
+					else if (menuChoiceStudent1.equals("2")) {
+						logInAndRegisterMethod();
+						correctInput = true;
+					}
 				
-				else {
-					System.out.println("Invalid input. Please try again \n1. Make a new booking with an advisor \n2. Cancel a booking \n3. Log out");
-					menuChoiceStudent1 = input.nextLine();
-				}
-			}
+					else {
+						System.out.println("Invalid input. Please try again \n1. Cancel a booking \n2. Log out");
+						menuChoiceStudent1 = input.nextLine();
+					}
 			
+			}// Else	
 		}// While
 	}// end of studentLoggedInMenu
+	
+	
+	
+	
 	
 	
 	public static void makeABooking() {
@@ -538,9 +561,7 @@ public static void whileLogInAsAdvisor() {
 		
 		
 		System.out.println("\nThis is the list of available advisors to you: ");
-		System.out.println("-----------------------------------------------");
-		System.out.println("Current logged in StudentID is: " + studentUsername);
-		System.out.println("-----------------------------------------------");
+		System.out.println("_________________________________________________");
 		
 		// here need options to cancel booking!!!!
 
@@ -564,7 +585,7 @@ public static void whileLogInAsAdvisor() {
 					System.out.println("9. " + advisor9.getFirstName() + " " + advisor9.getLastName() + " is researching in: " + advisor9.getExpertise());
 	
 	
-	System.out.println("---------------------------------------");
+	System.out.println("_________________________________________________");
 	System.out.println("\nWhich advisor would you like to book?");
 	String menuStudentChoiceOfAdvisor = input.nextLine();
 		
@@ -696,19 +717,19 @@ public static void whileLogInAsAdvisor() {
 					if (bookingList.get(i)[1].equals("111")) {
 						System.out.println("You were booked with " + advisor1.getFirstName() + " " + advisor1.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor1.isBooked[0] = "0";	
 								bookingList.remove(i);
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor1.isBooked[1] = "0";		
 								bookingList.remove(i);
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor1.isBooked[2] = "0";	
 								bookingList.remove(i);
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor1.isBooked[3] = "0";	
 								bookingList.remove(i);
 							}
@@ -716,16 +737,16 @@ public static void whileLogInAsAdvisor() {
 					else if (bookingList.get(i)[1].equals("222")) {
 						System.out.println("You were booked with " + advisor2.getFirstName() + " " + advisor2.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor2.isBooked[0] = "0";						
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor2.isBooked[1] = "0";		
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor2.isBooked[2] = "0";	
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor2.isBooked[3] = "0";	
 							}
 					
@@ -733,112 +754,112 @@ public static void whileLogInAsAdvisor() {
 					else if (bookingList.get(i)[1].equals("333")) {
 						System.out.println("You were booked with " + advisor3.getFirstName() + " " + advisor3.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor3.isBooked[0] = "0";						
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor3.isBooked[1] = "0";		
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor3.isBooked[2] = "0";	
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor3.isBooked[3] = "0";	
 							}
 					}
 					else if (bookingList.get(i)[1].equals("444")) {
 						System.out.println("You were booked with " + advisor4.getFirstName() + " " + advisor4.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor4.isBooked[0] = "0";						
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor4.isBooked[1] = "0";		
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor4.isBooked[2] = "0";	
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor4.isBooked[3] = "0";	
 							}
 					}
 					else if (bookingList.get(i)[1].equals("555")) {
 						System.out.println("You were booked with " + advisor5.getFirstName() + " " + advisor5.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor5.isBooked[0] = "0";						
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor5.isBooked[1] = "0";		
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor5.isBooked[2] = "0";	
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor5.isBooked[3] = "0";	
 							}
 					}
 					else if (bookingList.get(i)[1].equals("666")) {
 						System.out.println("You were booked with " + advisor6.getFirstName() + " " + advisor6.getLastName() + " in "
 						+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor6.isBooked[0] = "0";						
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor6.isBooked[1] = "0";		
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor6.isBooked[2] = "0";	
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor6.isBooked[3] = "0";	
 							}
 					}
 					else if (bookingList.get(i)[1].equals("777")) {
 						System.out.println("You were booked with " + advisor7.getFirstName() + " " + advisor7.getLastName() + " in "
 						+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot1") {
+							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor7.isBooked[0] = "0";						
 							}
-							else if (bookingList.get(i)[4] == "Slot2") {
+							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor7.isBooked[1] = "0";		
 							}
-							else if (bookingList.get(i)[4] == "Slot3") {
+							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor7.isBooked[2] = "0";	
 							}
-							else if (bookingList.get(i)[4] == "Slot4") {
+							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor7.isBooked[3] = "0";	
 							}
 					}
 					else if (bookingList.get(i)[1].equals("888")) {
 						System.out.println("You were booked with " + advisor8.getFirstName() + " " + advisor8.getLastName() + " in "
 						+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-						if (bookingList.get(i)[4] == "Slot1") {
+						if (bookingList.get(i)[4] == "Slot 1") {
 							advisor8.isBooked[0] = "0";						
 						}
-						else if (bookingList.get(i)[4] == "Slot2") {
+						else if (bookingList.get(i)[4] == "Slot 2") {
 							advisor8.isBooked[1] = "0";		
 						}
-						else if (bookingList.get(i)[4] == "Slot3") {
+						else if (bookingList.get(i)[4] == "Slot 3") {
 							advisor8.isBooked[2] = "0";	
 						}
-						else if (bookingList.get(i)[4] == "Slot4") {
+						else if (bookingList.get(i)[4] == "Slot 4") {
 							advisor8.isBooked[3] = "0";	
 						}
 					}
 					else if (bookingList.get(i)[1].equals("999")) {
 						System.out.println("You were booked with " + advisor9.getFirstName() + " " + advisor9.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-						if (bookingList.get(i)[4] == "Slot1") {
+						if (bookingList.get(i)[4] == "Slot 1") {
 							advisor9.isBooked[0] = "0";						
 						}
-						else if (bookingList.get(i)[4] == "Slot2") {
+						else if (bookingList.get(i)[4] == "Slot 2") {
 							advisor9.isBooked[1] = "0";		
 						}
-						else if (bookingList.get(i)[4] == "Slot3") {
+						else if (bookingList.get(i)[4] == "Slot 3") {
 							advisor9.isBooked[2] = "0";	
 						}
-						else if (bookingList.get(i)[4] == "Slot4") {
+						else if (bookingList.get(i)[4] == "Slot 4") {
 							advisor9.isBooked[3] = "0";	
 						}
 					}

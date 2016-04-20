@@ -12,10 +12,10 @@ public class Advisor extends User {
 		public String expertise;
 		
 		Advisor(){//constructor method called Room(). It is used to initialize states of the class
-			studentSlot[0] = "Slot1";
-			studentSlot[1] = "Slot2";
-			studentSlot[2] = "Slot3";
-			studentSlot[3] = "Slot4";
+			studentSlot[0] = "Slot 1";
+			studentSlot[1] = "Slot 2";
+			studentSlot[2] = "Slot 3";
+			studentSlot[3] = "Slot 4";
 			
 			isBooked[0] = "0";
 			isBooked[1] = "0";
@@ -73,10 +73,10 @@ public class Advisor extends User {
 			        emptySlot = findEmptySlot();
 					if(emptySlot != -1) { // emptyslot -1 means nothing is available
 						System.out.println("There is an available slot for this advisor : " + getStudentSlot()[emptySlot]);
-						System.out.println("This slot is now booked for you");
+						System.out.println("This slot is now booked for you\n\n");
 						String[] booking = {ProcessLogIn.studentUsername, 
 								ProcessLogIn.currentAdvisorID, ProcessLogIn.currentAdvisorFirstName, 
-								ProcessLogIn.currentAdvisorLastName, getStudentSlot()[emptySlot]};
+								ProcessLogIn.currentAdvisorLastName, getStudentSlot()[emptySlot], ProcessLogIn.studentFullName};
 								ProcessLogIn.bookingList.add(booking);
 //							for(int i = 0; i < ProcessLogIn.bookingList.size(); i++) {
 //								System.out.println("Booking: student is: " + ProcessLogIn.bookingList.get(i)[0] + 

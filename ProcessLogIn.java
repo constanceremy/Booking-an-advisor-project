@@ -9,6 +9,8 @@ public class ProcessLogIn {
 	public static ArrayList<String[]> bookingList = new ArrayList<String[]>();
 	
 	
+	
+	
 	static String studentUsername;
 	static String studentFullName;
 	static String advisorID = "";
@@ -17,6 +19,7 @@ public class ProcessLogIn {
 	static String currentAdvisorLastName = "";
 	
 
+	static Student student1 = new Student();
 	
 	static Advisor advisor1 = new Advisor();
 	static Advisor advisor2 = new Advisor();
@@ -148,30 +151,57 @@ public class ProcessLogIn {
 			
 			
 			// Create a object of type PrintWriter  and FileOutputStream makes the text append previous text
-			try (PrintWriter output = new PrintWriter(new FileOutputStream(file, true)); ){
+			try (PrintWriter output = new PrintWriter(new FileOutputStream(file, true));) {
+				
 				
 			
-		   System.out.println("Please enter your first name:");
-		   String firstName = input.next();
-		   
-		   System.out.println("Please enter your last name:");
-		   String lastName = input.next();
-		   
-		   System.out.println("Please enter your StudentID:");
-		   String studentID = input.next();
-		   
-		   System.out.println("Please enter a password:");
-		   String password = input.next();
-		   		  
-		   // Writes all input into a .txt file on the harddrive in special order	
-		   output.println(studentID + " " + password + " " + firstName + " " + lastName) ;
-		      
-		      System.out.println("Congratulations - your account has been created ");
-		      output.close();
-		      boolean canLogIn = true;
-		      if (canLogIn = true) {
-		    	  logInMenu();
-		      }
+			   System.out.println("Please enter your first name:");
+			   student1.setFirstName(input.next());
+			   
+			   System.out.println("Please enter your last name:");
+			   student1.setLastName(input.next());
+			   
+			   System.out.println("Please enter your StudentID:");
+			   student1.setStudentID(input.nextLine());
+			   String studentID = input.nextLine();
+			   Boolean studentIDInput = false;
+			   while (!studentIDInput) {
+					   if (studentID.length() == 8
+						&& Character.isLetter(studentID.charAt(0)) 
+						&& Character.isLetter(studentID.charAt(1))
+						&& Character.isLetter(studentID.charAt(2))
+						&& Character.isLetter(studentID.charAt(3))
+						&& Character.isDigit(studentID.charAt(4))
+						&& Character.isDigit(studentID.charAt(5))
+						&& Character.isLetter(studentID.charAt(6))
+						&& Character.isLetter(studentID.charAt(7))) {
+						   studentIDInput = true;
+					   } else {
+						   System.out.println("Invalid studentID, please try again");
+						   studentID = input.nextLine();
+					   }
+			   }// While
+			   
+			   System.out.println("Your password must contain only letters and numbers, no spaces, a minimum 8 characters and at least one number: ");
+			   boolean noWhite = false;
+			   boolean oneDigit = false;
+			   Scanner scan = new Scanner(System.in);
+			   String password = "";
+			   while (!noWhite ||  !oneDigit || password.length() < 8) {
+			     System.out.print("Enter your new password: ");
+			     password = scan.nextLine();
+			     noWhite = !password.contains(" ");
+			     oneDigit = password.matches(".*\\d.*");
+			   }// While
+			   
+			   
+			   System.out.println("Congratulations - your account has been created ");
+			   output.println(studentID + " " + password + " " + student1.getFirstName() + " " + student1.getLastName());
+			      
+			      
+			   output.close();
+			   logInMenu();
+			   
 			} // Closes try
 			
 			catch (FileNotFoundException ex) {
@@ -260,12 +290,22 @@ public class ProcessLogIn {
 		int numberOfTries = 3;
 		boolean loggedIn = false;
 		
+		
 		Scanner input = new Scanner(System.in);
 		
 			while (!loggedIn) {	
-			
+				
+				
+				
+				System.out.println("-------------------------------------------");
+				System.out.println("1. Go back" );
+				System.out.println("-------------------------------------------\n");
 				System.out.println("To log in as an advisor, please enter your username: ");
 				userName = input.nextLine();
+				
+				if (userName.equals("1")) { // Gives the user a chance to create an account if none exists
+					logInMenu();
+				 }
 			
 				System.out.println("Now enter your password: ");
 				password = input.nextLine();
@@ -397,13 +437,18 @@ public class ProcessLogIn {
 		 Scanner input = new Scanner(System.in); 
 		 
 		 System.out.println("-------------------------------------------");
-		 System.out.println("OBS! If you haven't registered yet, press 2" );
+		 System.out.println("1. Go back");
+		 System.out.println("2. Take me back - I need to register" );
 		 System.out.println("-------------------------------------------\n");
 		 System.out.println("Please insert your StudentID: ");
 		 String insertStudentID = input.nextLine();
 		 
-		 if (insertStudentID.equals(studentChooseToRegister)) { // Gives the user a chance to create an account if none exists
-			logInAndRegisterMethod();
+		 if (insertStudentID.equals("1")) { // Gives the user a chance to create an account if none exists
+			logInMenu();
+		 }
+		 
+		 else if (insertStudentID.equals("2")) {
+			 logInAndRegisterMethod();
 		 }
 		 
 		 System.out.println("Please insert your password: ");
@@ -414,6 +459,9 @@ public class ProcessLogIn {
 			 
 			 System.out.println("You've succesfully logged in\n");
 			 studentUsername = insertStudentID;
+			 System.out.println("-------------------------------");
+			 System.out.println("Welcome to EazyBook - " + studentFullName);
+			 System.out.println("-------------------------------");
 			 
 //			 for (int i = 0; i < LogInManager.users.size(); i++) {
 //					if (LogInManager.users.get(i)[0].equals(studentUsername)) {
@@ -443,7 +491,7 @@ public class ProcessLogIn {
 //			 
 //			 
 
-					studentLoggedInMenu();
+				studentLoggedInMenu();
 				
 			 } // end of of if login manager authorize
 		 else {
@@ -483,10 +531,10 @@ public class ProcessLogIn {
 		String menuChoiceStudent1;
 		boolean correctInput = false;
 		
-		System.out.println("-------------------------------");
-		System.out.println("Welcome to EazyBook - " + studentFullName);
-		System.out.println("-------------------------------");
-		
+//		System.out.println("-------------------------------");
+//		System.out.println("Welcome to EazyBook - " + studentFullName);
+//		System.out.println("-------------------------------");
+//		
 
 		
 		
@@ -507,8 +555,8 @@ public class ProcessLogIn {
 					correctInput = true;
 					
 				} else {
-					System.out.println("Invalid input. Please try again \n1. Make a new booking with an advisor \n2. Log out");
-					menuChoiceStudent1 = input.nextLine();
+					System.out.println("Invalid input.");
+					studentLoggedInMenu();
 				}
 			}// If verifyStudentBooking
 		
@@ -543,8 +591,8 @@ public class ProcessLogIn {
 					}
 				
 					else {
-						System.out.println("Invalid input. Please try again \n1. Cancel a booking \n2. Log out");
-						menuChoiceStudent1 = input.nextLine();
+						System.out.println("Invalid input.\n");
+						studentLoggedInMenu();
 					}
 			
 			}// Else	
@@ -719,19 +767,15 @@ public class ProcessLogIn {
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
 							if (bookingList.get(i)[4] == "Slot 1") {
 								advisor1.isBooked[0] = "0";	
-								bookingList.remove(i);
 							}
 							else if (bookingList.get(i)[4] == "Slot 2") {
 								advisor1.isBooked[1] = "0";		
-								bookingList.remove(i);
 							}
 							else if (bookingList.get(i)[4] == "Slot 3") {
 								advisor1.isBooked[2] = "0";	
-								bookingList.remove(i);
 							}
 							else if (bookingList.get(i)[4] == "Slot 4") {
 								advisor1.isBooked[3] = "0";	
-								bookingList.remove(i);
 							}
 					}
 					else if (bookingList.get(i)[1].equals("222")) {

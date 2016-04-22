@@ -9,7 +9,6 @@ public class Student extends User {
 	private String studentEmail;
 
 	// getter methods
-	
 	String getStudentTopic(){
 		return studentTopic;
 	}
@@ -23,7 +22,6 @@ public class Student extends User {
 	}
 	
 	// setter methods
-
 	void setStudentTopic(String topic){
 		studentTopic = topic;
 	}
@@ -35,6 +33,5 @@ public class Student extends User {
 	void setStudentEmail(String email){
 		studentEmail = email;
 	}
-
-
-}
+	
+} // student class

@@ -2,26 +2,27 @@ package Project;
 
 import java.util.*;
 import java.io.*;
-import java.nio.*;
+
 
 public class ProcessLogIn {
 	
-	private static ArrayList<String[]> users = new ArrayList<String[]>();
-	public static ArrayList<String[]> bookingList = new ArrayList<String[]>();
+	//creating the ArrayList of Registered students that is going to go in the file.
+	static ArrayList<String[]> users = new ArrayList<String[]>();
+	// creating the ArrayList of student bookings that will be created every time we start the console.
+	static ArrayList<String[]> bookingList = new ArrayList<String[]>();
 	
-	
-	
-	
-	static String studentUsername;
-	static String studentFullName;
+	// creating variables that are accessible from other classes.
+	static String studentUsername = "";
+	static String studentFullName = "";
 	static String advisorID = "";
 	static String currentAdvisorID = "";
 	static String currentAdvisorFirstName = "";
 	static String currentAdvisorLastName = "";
 	
-
+	// creating a student1 object in which we are temporarily storing the values of the new students.
 	static Student student1 = new Student();
 	
+	// hardcoding the new advisor objects.
 	static Advisor advisor1 = new Advisor();
 	static Advisor advisor2 = new Advisor();
 	static Advisor advisor3 = new Advisor();
@@ -32,15 +33,16 @@ public class ProcessLogIn {
 	static Advisor advisor8 = new Advisor();
 	static Advisor advisor9 = new Advisor();
 	
-	
+	// creating booleans that are accessible from other classes.
 	static boolean logInAsStudent = false;
 	static boolean logInAsAdvisor = false;
+	private static Scanner input;
+	
 	
 	
 	public static void main (String[] args) {
 	
-		
-		//creates the 9 advisor objects		
+		//giving the 9 advisor objects their data fields (using inheritance for first name, last name and password).		
 		advisor1.setAdvisorID("111"); advisor1.setExpertise("Economics"); advisor1.setFirstName("Zaedo");
 		advisor1.setLastName("Musa"); advisor1.setPassword("ZaedoMusa");
 		
@@ -68,26 +70,16 @@ public class ProcessLogIn {
 		advisor9.setAdvisorID("999"); advisor9.setExpertise("Information Technology"); advisor9.setFirstName("Donald");
 		advisor9.setLastName("Trump"); advisor9.setPassword("DonaldTrump");
 
+		//the main is only the logInAndRegisterMethod.
 		logInAndRegisterMethod();
 		
 
-	} // END OF MAIN
-	
-	
+	} // Main
 	
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//logInAndRegisterMethod is the method where students and advisors can choose if they want to login or register
+	// (advisors can only login)
 	public static void logInAndRegisterMethod() {
 		System.out.println("----------------------------------------------------------------");
 		System.out.println("Welcome to the EazyBook system - we'll help you find an advisor!");
@@ -99,7 +91,7 @@ public class ProcessLogIn {
 		
 		String userChoiceOne = ""; // Declaring variable 'choice' as early as possible
 		
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		userChoiceOne = input.nextLine();
 		
 		boolean userDecisionOne = false;
@@ -108,140 +100,145 @@ public class ProcessLogIn {
 			if (userChoiceOne.equals(menuOptionLogIn)) { // This choice presents the user with the log-in menu
 				logInMenu();
 				userDecisionOne = true;
-			}
-		
+			} // If
 			else if (userChoiceOne.equals(menuOptionRegister)) { // This choice presents the user with the registration menu
 				createStudentAccount();
 				userDecisionOne = true;
-			}
-			
+			} // Else if
 			else if (userChoiceOne.equals(menuNoInput)) { // Prompts this conditional if there's no input at all
 				System.out.println("No input recognized. Please try again.\n1. Log-in \n2. Register (Students) ");
 				userChoiceOne = input.nextLine();
-			}
-		
+			} // Else if
 			else { // This message is prompted if the input is not valid e.g letters or anything but 1 or 2 
 				System.out.println("Incorrect input. Please try again.\n1. Log-in \n2. Register (Students) ");
 				userChoiceOne = input.nextLine();
-			}
-		
-		} // closes while loop
-	}	// closes logInAndRegisterMethod
-	
+			} // Else
+		} // While
+	}	// logInAndRegisterMethod()
 	
 
-	
-//	public static void addBooking() {
-//		String[] booking = { ProcessLogIn.studentUsername, advisorID, emptySlot };
-////		System.out.println(studentUsername + " " + advisorID + " " + studentSlot);
-//		ProcessLogIn.bookingList.add(booking);
-//	}
-	
-	
-	
-	
-	
-	
-	
-	
+	// this method is called when a student chooses to register.
 	public static void createStudentAccount() {
 			
 			// Create a file instance
 			File file = new File("users.txt");
-			Scanner input = new Scanner(System.in);
+			input = new Scanner(System.in);
 			
 			LogInManager loginManager = new LogInManager();
 			
 			// Create a object of type PrintWriter  and FileOutputStream makes the text append previous text
 			try (PrintWriter output = new PrintWriter(new FileOutputStream(file, true));) {
 				
-				
-				
-			
 			   System.out.println("Please enter your first name:");
-			   student1.setFirstName(input.next());
-			   
+			   boolean noWhiteFirstName = false;
+
+			   while (!noWhiteFirstName) {
+				   student1.setFirstName(input.nextLine());
+				   if (student1.getFirstName().contains(" ")) {
+					   System.out.println("Invalid input. Please try again with no spaces.");
+				   } // If
+				   else if (student1.getFirstName().equals("")) {
+					   System.out.println("No input recognized. Please enter your first name:");  
+				   } // Else if
+				   else {
+					   noWhiteFirstName = true;
+				   } // Else
+			   } // While
+			 
 			   System.out.println("Please enter your last name:");
-			   student1.setLastName(input.next());
+			   boolean noWhiteLastName = false;
+
+			   while (!noWhiteLastName) {
+				   student1.setLastName(input.nextLine());
+				   if (student1.getLastName().contains(" ")) {
+					   System.out.println("Invalid input. Please try again with no spaces:");
+				   } // If
+				   else if (student1.getLastName().equals("")) {
+					   System.out.println("No input recognized. Please enter your last name:");
+				   } // Else If
+				   else {
+					   noWhiteLastName = true;
+				   } // Else
+			   } // While
 			   
 			   System.out.println("Please enter your StudentID:");
 			   student1.setStudentID(input.next());
 			   boolean studentIDInput = false;
 			   boolean studentIDRegistered = false; 
-			   
-			   
+			    
 			   while (!studentIDInput) {
-					   if (student1.getStudentID().length() == 8
-						&& Character.isLetter(student1.getStudentID().charAt(0)) 
-						&& Character.isLetter(student1.getStudentID().charAt(1))
-						&& Character.isLetter(student1.getStudentID().charAt(2))
-						&& Character.isLetter(student1.getStudentID().charAt(3))
-						&& Character.isDigit(student1.getStudentID().charAt(4))
-						&& Character.isDigit(student1.getStudentID().charAt(5))
-						&& Character.isLetter(student1.getStudentID().charAt(6))
-						&& Character.isLetter(student1.getStudentID().charAt(7))) {
-						
-						   if (loginManager.ifStudentIDRegistered(student1.getStudentID())) {
-							   System.out.println("Username is already in use. Please user another or register");
-						   }
-						   else {
-							   System.out.println("This studentID is not used already. You are good to go!");
-							   studentIDInput = true;
-						   }
-						   
-						   
-					   } else {
-						   System.out.println("Invalid studentID, please try again");
-						   student1.setStudentID(input.next());
-					   }
+				   if (student1.getStudentID().length() == 8
+					&& Character.isLetter(student1.getStudentID().charAt(0)) 
+					&& Character.isLetter(student1.getStudentID().charAt(1))
+					&& Character.isLetter(student1.getStudentID().charAt(2))
+					&& Character.isLetter(student1.getStudentID().charAt(3))
+					&& Character.isDigit(student1.getStudentID().charAt(4))
+					&& Character.isDigit(student1.getStudentID().charAt(5))
+					&& Character.isLetter(student1.getStudentID().charAt(6))
+					&& Character.isLetter(student1.getStudentID().charAt(7))) {
+				
+					   // this while loop checks that this studentID has not already been registered.
+					   while(!studentIDRegistered) {
+						   try {
+							   new Scanner(file);
+							   if (LogInManager.ifStudentIDRegistered(student1.getStudentID())) {
+								   System.out.println("Username is already in use. Please start again:");
+								   createStudentAccount();
+							   } // If
+							   else {
+								   System.out.println("This studentID is not used already. You are good to go!");
+								   studentIDInput = true;
+								   break;
+							   } // Else
+						   } // Try
+						   catch (FileNotFoundException ex) {
+						   } // Catch
+					   } // While
+				   } // If
+				   else {
+					   System.out.println("Invalid studentID. Please try again:");
+					   student1.setStudentID(input.next());
+				   } // Else
 			   }// While
-			   
-			   System.out.println("Your password must contain only letters and numbers, no spaces, a minimum 8 characters and at least one number: ");
-			   boolean noWhite = false;
+		
+			   System.out.println("Your password must contain only letters and numbers, no spaces, a minimum 8 characters and at least one number:");
+			   boolean noWhitePassword = false;
 			   boolean oneDigit = false;
 			   Scanner scan = new Scanner(System.in);
 			   String password = "";
-			   while (!noWhite ||  !oneDigit || password.length() < 8) {
-			     System.out.print("Enter your new password: ");
-			     password = scan.nextLine();
-			     noWhite = !password.contains(" ");
-			     oneDigit = password.matches(".*\\d.*");
-			   }// While
 			   
-			   
-			   System.out.println("Congratulations - your account has been created ");
+				   while (!noWhitePassword ||  !oneDigit || password.length() < 8) {
+				     System.out.print("Enter your new password:");
+				     password = scan.nextLine();
+				     noWhitePassword = !password.contains(" ");
+				     oneDigit = password.matches(".*\\d.*");
+				   }// While
+
+			   System.out.println("Congratulations - your account has been created!");
 			   output.println(student1.getStudentID() + " " + password + " " + student1.getFirstName() + " " + student1.getLastName());
-			      
-			      
+
 			   output.close();
 			   logInMenu();
 			   
-			} // Closes try
+			} // Try
 			
 			catch (FileNotFoundException ex) {
 				System.out.println("There has been no registration yet - to proceed please register an account.");
 				logInAndRegisterMethod();
-			}
+			} // Catch
 			
-	} // Closes createStudentAccount
+	} // createStudentAccount()
 	
 	
-	
-	
-	
-	
-	
-	
-	
+
 	// A log-in method that is called when user wishes to log in rather than register. 
 	public static void logInMenu() {
 		
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		System.out.println("\nChoose either 1 or 2 to proceed. \n1. Log in as advisor \n2. Log in as student \n3. Go Back ");
 		String userChoiceTwo; // Declaring user's choice as early on as possible
 		boolean userDecisionTwo = false;
-		
-		
+
 		String logInMenuAdvisor = "1"; //  Choose option 1 to log in as advisor
 		String logInMenuStudent = "2"; // Choose option 2 to log in as student
 		String logInMenuGoBack = "3"; // Option for user to go back to Log in or Register menu
@@ -250,67 +247,50 @@ public class ProcessLogIn {
 		userChoiceTwo = input.nextLine();
 		
 		while (!userDecisionTwo) { // While loop for userChoiceTwo makes the menu appear until choice is valid
-			if (userChoiceTwo.equals("1")) {
+			if (userChoiceTwo.equals(logInMenuAdvisor)) {
 				logInAsAdvisor();
 				userDecisionTwo = true;
-			}
-			
+			} // If
 			else if (userChoiceTwo.equals(logInMenuStudent)) {
-				
 				try {
 				File file= new File("users.txt");
 				Scanner readData = new Scanner(file);
 				logInAsStudent();
 				userDecisionTwo = true;
-				}
-				
+				} // Try
 				catch (FileNotFoundException ex) {
 					System.out.println("There has been no registration yet - to proceed please register an account.\n");
 					logInAndRegisterMethod();
-				}
-				
-				}
-			
+				} // Catch
+			} // Else If
 			else if (userChoiceTwo.equals(logInMenuGoBack)) {
 				logInAndRegisterMethod();
-			}
+			} // Else If
 			
 			else if (userChoiceTwo.equals(logInMenuNoInput)) { 
 				System.out.println("No input recognized. Please try again.\n1. Log in as advisor \n2. Log in as student \n3. Go Back "); 
 				userChoiceTwo = input.nextLine();
-			}
-			
+			} // Else If
 			else {
-				System.out.println("Incorrect input. Please try again.\n1. Log in as advisor \n2. Log in as student \n3. Go Back ");
+				System.out.println("Invalid input. Please try again.\n1. Log in as advisor \n2. Log in as student \n3. Go Back ");
 				userChoiceTwo = input.nextLine();
-			}
-			
-		} // closes while loop
-		
-	} // closes logInMenu
-	
-	
-	
-	
-	
+			} // Else
+		} // While
+	} // logInMenu()
 	
 	
 	
 	// the actual log in system method for the advisor
 	public static void logInAsAdvisor() {
+		
 		String userName = "";
 		String password = "";
-		int counterTries = 0;
-		int numberOfTries = 3;
+
 		boolean loggedIn = false;
 		
-		
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		
 			while (!loggedIn) {	
-				
-				
-				
 				System.out.println("-------------------------------------------");
 				System.out.println("1. Go back" );
 				System.out.println("-------------------------------------------\n");
@@ -319,7 +299,7 @@ public class ProcessLogIn {
 				
 				if (userName.equals("1")) { // Gives the user a chance to create an account if none exists
 					logInMenu();
-				 }
+				} // If
 			
 				System.out.println("Now enter your password: ");
 				password = input.nextLine();
@@ -327,95 +307,94 @@ public class ProcessLogIn {
 				if (advisor1.getAdvisorID().equals(userName) && advisor1.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "111";
+					System.out.println("You have successfully logged in. Welcome " + advisor1.getFirstName() + "!");
+					currentAdvisorID = advisor1.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor2.getAdvisorID().equals(userName) && advisor2.getPassword().equals(password)) {
+				} // If
+				else if (advisor2.getAdvisorID().equals(userName) && advisor2.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "222";
+					System.out.println("You have successfully logged in. Welcome " + advisor2.getFirstName() + "!");
+					currentAdvisorID = advisor2.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor3.getAdvisorID().equals(userName) && advisor3.getPassword().equals(password)) {
+				} // Else If
+				else if (advisor3.getAdvisorID().equals(userName) && advisor3.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "333";
+					System.out.println("You have successfully logged in. Welcome " + advisor3.getFirstName() + "!");
+					currentAdvisorID = advisor3.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor4.getAdvisorID().equals(userName) && advisor4.getPassword().equals(password)) {
+				} // Else If 
+				else if (advisor4.getAdvisorID().equals(userName) && advisor4.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "444";
+					System.out.println("You have successfully logged in. Welcome " + advisor4.getFirstName() + "!");
+					currentAdvisorID = advisor4.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor5.getAdvisorID().equals(userName) && advisor5.getPassword().equals(password)) {
+				} // Else If 
+				else if (advisor5.getAdvisorID().equals(userName) && advisor5.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "555";
+					System.out.println("You have successfully logged in. Welcome " + advisor5.getFirstName() + "!");
+					currentAdvisorID = advisor5.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor6.getAdvisorID().equals(userName) && advisor6.getPassword().equals(password)) {
+				} // Else If 
+				else if (advisor6.getAdvisorID().equals(userName) && advisor6.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "666";
+					System.out.println("You have successfully logged in. Welcome " + advisor6.getFirstName() + "!");
+					currentAdvisorID = advisor6.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor7.getAdvisorID().equals(userName) && advisor7.getPassword().equals(password)) {
+				} // Else If  
+				else if (advisor7.getAdvisorID().equals(userName) && advisor7.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "777";
+					System.out.println("You have successfully logged in. Welcome " + advisor7.getFirstName() + "!");
+					currentAdvisorID = advisor7.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor8.getAdvisorID().equals(userName) && advisor8.getPassword().equals(password)) {
+				} // Else If 
+				else if (advisor8.getAdvisorID().equals(userName) && advisor8.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "888";
+					System.out.println("You have successfully logged in. Welcome " + advisor8.getFirstName() + "!");
+					currentAdvisorID = advisor8.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else if (advisor9.getAdvisorID().equals(userName) && advisor9.getPassword().equals(password)) {
+				} // Else If  
+				else if (advisor9.getAdvisorID().equals(userName) && advisor9.getPassword().equals(password)) {
 					loggedIn = true;
 					logInAsAdvisor = true;
-					System.out.println("You have successfully logged in...");
-					currentAdvisorID = "999";
+					System.out.println("You have successfully logged in. Welcome " + advisor9.getFirstName() + "!");
+					currentAdvisorID = advisor9.getAdvisorID();
 					whileLogInAsAdvisor();
-				} else {
+				} // Else If 
+				else {
 				// This is the false block, if either password or username doesn't fit
 				System.out.println("You entered a wrong username or password. ");
 					//if (counterTries == 1) {
 						//System.out.print("OBS! You have 2 tries left\n");
-				}
-				
-				
-		} // Closes the while loop for countOfTries
-	} // end of logInAsAdvisor Method
+				} // Else	
+		} // While
+	} // logInAsAdvisor()
+	
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
 	public static void whileLogInAsAdvisor() {
 	
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		
 			while (logInAsAdvisor)	{
-
-			
 				for(int i = 0; i < bookingList.size(); i++) {
 					if (bookingList.get(i)[1].equals(currentAdvisorID)) {
 						System.out.println("You have a booking with " + bookingList.get(i)[5] + ", studentID: " + bookingList.get(i)[0]);
-					}
+					} // If
 					else {
 						System.out.println("You do not have any bookings. Please come back later.");
-					}
-					}
+					} // Else
+				} // For
 			
 				if ((bookingList.size()) == 0) {
 					System.out.println("You do not have any bookings. Please come back later.");
-				}
+				} // If
 			
 				System.out.println("When you are done reviewing your bookings, please select option 1");
 				System.out.println("1: Log out");
@@ -425,198 +404,152 @@ public class ProcessLogIn {
 						System.out.println("You are now logged out from the Advisor area. Thank you for using our program!"); 
 						logInAsAdvisor = false;
 						logInAndRegisterMethod();
-				} 
+				} // If
 				else {
 					System.out.println("Invalid input. Please try again. Select option 1");
 					System.out.println("1: Log out");
 					menuChoiceAdvisor = input.nextLine();
-				}
-			
-
-		}// End of while-loop
-	}// End of whileLogInAsAdvisor method
-	
-
-
+				} // Else
+			}// While
+	}// whileLogInAsAdvisor()
 
 
 
 	// The actual log in system method - it is called when the user wishes to log in as student	
 	public static void logInAsStudent() {
-		String studentChooseToRegister = "2";
-	
-		LogInManager loginManager = new LogInManager();
+			
+		input = new Scanner(System.in); 
 		 
+		System.out.println("-------------------------------------------");
+		System.out.println("1. Go back");
+		System.out.println("2. Take me back - I need to register" );
+		System.out.println("-------------------------------------------\n");
+		System.out.println("Please insert your StudentID: ");
+		String insertStudentID = input.nextLine();
 		 
-		 Scanner input = new Scanner(System.in); 
-		 
-		 System.out.println("-------------------------------------------");
-		 System.out.println("1. Go back");
-		 System.out.println("2. Take me back - I need to register" );
-		 System.out.println("-------------------------------------------\n");
-		 System.out.println("Please insert your StudentID: ");
-		 String insertStudentID = input.nextLine();
-		 
-		 if (insertStudentID.equals("1")) { // Gives the user a chance to create an account if none exists
+		if (insertStudentID.equals("1")) { // Gives the user a chance to create an account if none exists
 			logInMenu();
-		 }
-		 
-		 else if (insertStudentID.equals("2")) {
+		} // If
+		else if (insertStudentID.equals("2")) {
 			 logInAndRegisterMethod();
-		 }
+		} // Else if
 		 
-		 System.out.println("Please insert your password: ");
-		 String insertPassword = input.nextLine();
-		 
-		 
-		 if (loginManager.authorize(insertStudentID, insertPassword)) {
-			 
+		System.out.println("Please insert your password: ");
+		String insertPassword = input.nextLine();
+		
+		if (LogInManager.authorize(insertStudentID, insertPassword)) {
 			 System.out.println("You've succesfully logged in\n");
 			 studentUsername = insertStudentID;
 			 System.out.println("\n---------------------------------------");
 			 System.out.println("Welcome to EazyBook - " + studentFullName);
-			 System.out.println("\n---------------------------------------");	 
-
-				studentLoggedInMenu();
-				
-			 } // end of of if login manager authorize
-		 else {
+			 System.out.println("---------------------------------------\n");	 	 
+			studentLoggedInMenu();		
+		} // If
+		else {
 			 System.out.println("Wrong username or password input, please try again.");
 			 logInAsStudent();
-		 }
+		} // Else
+	}// logInAsStudent()
 	
-	
-	}// closes logInAsStudent Method
-	
-	
-	
-	
-	
-	
+
 	
 	// Method created to verify if the studentID appears in the arraylist 'bookingList'
 	public static boolean verifyStudentBooking(String studentUsername) {
 		boolean result = false;
 		
 		for (String[] booking : bookingList) {
-			if (booking[0].equals(studentUsername))
+			if (booking[0].equals(studentUsername)) {
 				result = true;
-		}
+			} // If	
+		} // For
 		return result;
-	}
+	} // verifyStudentBooking()
 	
 	
-	
-	
-	
-	
-	
+
 	public static void studentLoggedInMenu() {
 		
-		Scanner input = new Scanner(System.in);
+		input = new Scanner(System.in);
 		String menuChoiceStudent1;
 		boolean correctInput = false;
-		
-		
-		
+
 		while (!correctInput) {
-			
 			if (!verifyStudentBooking(studentUsername)) {
+				
 				System.out.println("Please select an option. Type 1, or 2 \n1. Make a new booking with an advisor \n2. Log out");	
 				menuChoiceStudent1 = input.nextLine();
 
-				
 				if (menuChoiceStudent1.equals("1")) {
 					logInAsStudent = true;
 					makeABooking();
 					correctInput = true;
-					
-				} else if (menuChoiceStudent1.equals("2")) {
+				} // If 
+				else if (menuChoiceStudent1.equals("2")) {
 					logInAndRegisterMethod();
-					correctInput = true;
-					
-				} else {
+					correctInput = true;	
+				} // Else If
+				else {
 					System.out.println("Invalid input.");
 					studentLoggedInMenu();
-				}
-			}// If verifyStudentBooking
-		
-			
+				} // Else
+			}// If
 			else {
-				
-//				for(int i = 0; i < bookingList.size(); i++) {
-//				System.out.println("Booking: student is: " + bookingList.get(i)[5] +  " and advisorID is: " + bookingList.get(i)[1] + 
-//						"and the name is " + bookingList.get(i)[2] + bookingList.get(i)[3] + " at time Slot: " + bookingList.get(i)[4]);
-//				}// want to print the array list to see it temp
-				
-				
 				for (int i = 0; i < bookingList.size(); i++) {
 					if (studentUsername.equals(bookingList.get(i)[0])) {
 						System.out.println("You have a booking with advisor " + bookingList.get(i)[2] + " " + bookingList.get(i)[3]);
-					}
-				}
+					} // If
+				} // For
 				
 				System.out.println("Please select an option. Type 1, or 2 \n1. Cancel my booking \n2. Log out");	
 				menuChoiceStudent1 = input.nextLine();
 
-
-					if (menuChoiceStudent1.equals("1")) {
-						logInAsStudent = true;
-						cancelABooking();
-					}
-				
-					else if (menuChoiceStudent1.equals("2")) {
+				if (menuChoiceStudent1.equals("1")) {
+					logInAsStudent = true;
+					cancelABooking();
+				} // If
+				else if (menuChoiceStudent1.equals("2")) {
 						logInAndRegisterMethod();
 						correctInput = true;
-					}
-				
-					else {
-						System.out.println("Invalid input.\n");
-						studentLoggedInMenu();
-					}
-			
+				} // Else If
+				else {
+					System.out.println("Invalid input.\n");
+					System.out.println("Invalid input.");
+					studentLoggedInMenu();
+				} // Else
 			}// Else	
 		}// While
-	}// end of studentLoggedInMenu
-	
-	
-	
+	}// studentLoggedInMenu()
 	
 	
 	
 	public static void makeABooking() {
-		Scanner input = new Scanner(System.in);
 		
-		
+		input = new Scanner(System.in);
+			
 		System.out.println("\nThis is the list of available advisors to you: ");
 		System.out.println("---------------------------------------------------------");
 		
-		
-
-		
-	 // print advisor choices based on student's topic
+		// print advisor choices based on student's topic
 		// or when student logs in, create array with data from student. that way we can now his thesis topic.
 		// will be something like getStudentTopic etc.
 				
-					System.out.println("1. " + advisor1.getFirstName() + " " + advisor1.getLastName() + " is researching in: " + advisor1.getExpertise());
-					System.out.println("2. " + advisor2.getFirstName() + " " + advisor2.getLastName() + " is researching in: " + advisor2.getExpertise());
-					System.out.println("\n");
-					System.out.println("3. " + advisor3.getFirstName() + " " + advisor3.getLastName() + " is researching in: " + advisor3.getExpertise());
-					System.out.println("4. " + advisor4.getFirstName() + " " + advisor4.getLastName() + " is researching in: " + advisor4.getExpertise());
-					System.out.println("\n");
-					System.out.println("5. " + advisor5.getFirstName() + " " + advisor5.getLastName() + " is researching in: " + advisor5.getExpertise());
-					System.out.println("6. " + advisor6.getFirstName() + " " + advisor6.getLastName() + " is researching in: " + advisor6.getExpertise());
-					System.out.println("\n");
-					System.out.println("7. " + advisor7.getFirstName() + " " + advisor7.getLastName() + " is researching in: " + advisor7.getExpertise());
-					System.out.println("8. " + advisor8.getFirstName() + " " + advisor8.getLastName() + " is researching in: " + advisor8.getExpertise());
-					System.out.println("\n");
-					System.out.println("9. " + advisor9.getFirstName() + " " + advisor9.getLastName() + " is researching in: " + advisor9.getExpertise());
+		System.out.println("1. " + advisor1.getFirstName() + " " + advisor1.getLastName() + " is researching in: " + advisor1.getExpertise());
+		System.out.println("2. " + advisor2.getFirstName() + " " + advisor2.getLastName() + " is researching in: " + advisor2.getExpertise());
+		System.out.println("\n");
+		System.out.println("3. " + advisor3.getFirstName() + " " + advisor3.getLastName() + " is researching in: " + advisor3.getExpertise());
+		System.out.println("4. " + advisor4.getFirstName() + " " + advisor4.getLastName() + " is researching in: " + advisor4.getExpertise());
+		System.out.println("\n");
+		System.out.println("5. " + advisor5.getFirstName() + " " + advisor5.getLastName() + " is researching in: " + advisor5.getExpertise());
+		System.out.println("6. " + advisor6.getFirstName() + " " + advisor6.getLastName() + " is researching in: " + advisor6.getExpertise());
+		System.out.println("\n");
+		System.out.println("7. " + advisor7.getFirstName() + " " + advisor7.getLastName() + " is researching in: " + advisor7.getExpertise());
+		System.out.println("8. " + advisor8.getFirstName() + " " + advisor8.getLastName() + " is researching in: " + advisor8.getExpertise());
+		System.out.println("\n");
+		System.out.println("9. " + advisor9.getFirstName() + " " + advisor9.getLastName() + " is researching in: " + advisor9.getExpertise());
 	
-	
-	System.out.println("---------------------------------------------------------");
-	System.out.println("\nWhich advisor would you like to book?");
-	String menuStudentChoiceOfAdvisor = input.nextLine();
-		
+		System.out.println("---------------------------------------------------------");
+		System.out.println("\nWhich advisor would you like to book?");
+		String menuStudentChoiceOfAdvisor = input.nextLine();
 		
 		while (logInAsStudent)		{	
 			// if student has booking already, show it here. GET DATA IN ARRAYLIST
@@ -626,56 +559,47 @@ public class ProcessLogIn {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "111";
 					break;
-				}
-				
+				} // If
 				else if (menuStudentChoiceOfAdvisor.equals("2"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "222";
 					break;
-					} 
-				
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("3"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "333";
 					break;
-					}
-				
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("4"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "444";
 					break;
-					} 
-				
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("5"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "555";
 					break;
-					}
-				
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("6"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "666";
 					break;
-					} 
-				
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("7"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "777";
 					break;
-					}
-
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("8"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "888";
 					break;
-					} 
-				
+				} // Else If
 				else if (menuStudentChoiceOfAdvisor.equals("9"))  {
 					booking(advisor1, advisor2, advisor3, advisor4, advisor5, advisor6, advisor7, advisor8, advisor9, menuStudentChoiceOfAdvisor);
 					advisorID = "999";
 					break;
-					}
-				
+				} // Else If
 				else {
 					System.out.println("Invalid input. Please try again \n");
 					System.out.println("\n---------------------------------------");
@@ -693,25 +617,21 @@ public class ProcessLogIn {
 					System.out.println("\n");
 					System.out.println("9. " + advisor9.getFirstName() + " " + advisor9.getLastName() + " is researching in: " + advisor9.getExpertise());
 	
-	
 					System.out.println("\n---------------------------------------");
 					System.out.println("\nWhich advisor would you like to book?");
 					menuStudentChoiceOfAdvisor = input.nextLine();
-				}
-
-			
-		}// End of while-loop
-		
+				} // Else
+		}// While
 		studentLoggedInMenu();	
-	}// End of makeABooking method
+	}// makeABooking()
 	
 	
 	
-	
+	// method to book the right advisor with input from makeABooking()
 	public static void booking(Advisor advisor1, Advisor advisor2, Advisor advisor3, Advisor advisor4, Advisor advisor5, 
 			Advisor advisor6, Advisor advisor7, Advisor advisor8, Advisor advisor9, String advisorChoice){
-		/*This void method books the room slot by calling method from the Room class called "makeBooking() on the three objects. Three reference variable of Room e.g room1, room2 and room3 is sent 
-		  to this method and one integer variable which is the type of room e.g 1 is for Extreme programming	*/	
+		// This void method books the advisor slot by calling method from the Advisor class called "makeBooking() on the objects. 
+		// Nine reference variable of Advisor e.g advisor1, advisor2 etc. is sent to this method
 			switch (advisorChoice){
 				case "1" : currentAdvisorID = advisor1.getAdvisorID(); currentAdvisorFirstName = advisor1.getFirstName(); 
 					currentAdvisorLastName = advisor1.getLastName(); advisor1.makeBooking(); break; 
@@ -731,13 +651,13 @@ public class ProcessLogIn {
 			    	currentAdvisorLastName = advisor8.getLastName(); advisor8.makeBooking(); break;
 			    case "9" : currentAdvisorID = advisor9.getAdvisorID(); currentAdvisorFirstName = advisor9.getFirstName(); 
 			    	currentAdvisorLastName = advisor9.getLastName(); advisor9.makeBooking(); break;
-			}//switch
-	}//end of makeBooking
+			} // switch
+	} // booking()
 	
 	
 	
-	
-	
+	// method to cancel a booking according to logged in student and then set the isBooked[] to 0 for the right advisor and the right slot 
+	// and then deleting the right line containing the booking in the ArrayList.
 	public static void cancelABooking() {
 		if (logInAsStudent)		{
 			for(int i = 0; i < bookingList.size(); i++) {
@@ -745,165 +665,160 @@ public class ProcessLogIn {
 					if (bookingList.get(i)[1].equals("111")) {
 						System.out.println("You were booked with " + advisor1.getFirstName() + " " + advisor1.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor1.isBooked[0] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor1.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor1.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor1.isBooked[3] = "0";	
-							}
-					}
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor1.isBooked[0] = "0";	
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor1.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor1.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor1.isBooked[3] = "0";	
+						} // Else if
+					} // If
 					else if (bookingList.get(i)[1].equals("222")) {
 						System.out.println("You were booked with " + advisor2.getFirstName() + " " + advisor2.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor2.isBooked[0] = "0";						
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor2.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor2.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor2.isBooked[3] = "0";	
-							}
-					
-					}
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor2.isBooked[0] = "0";						
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor2.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor2.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor2.isBooked[3] = "0";	
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("333")) {
 						System.out.println("You were booked with " + advisor3.getFirstName() + " " + advisor3.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor3.isBooked[0] = "0";						
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor3.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor3.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor3.isBooked[3] = "0";	
-							}
-					}
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor3.isBooked[0] = "0";						
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor3.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor3.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor3.isBooked[3] = "0";	
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("444")) {
 						System.out.println("You were booked with " + advisor4.getFirstName() + " " + advisor4.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor4.isBooked[0] = "0";						
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor4.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor4.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor4.isBooked[3] = "0";	
-							}
-					}
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor4.isBooked[0] = "0";						
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor4.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor4.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor4.isBooked[3] = "0";	
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("555")) {
 						System.out.println("You were booked with " + advisor5.getFirstName() + " " + advisor5.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor5.isBooked[0] = "0";						
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor5.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor5.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor5.isBooked[3] = "0";	
-							}
-					}
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor5.isBooked[0] = "0";						
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor5.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor5.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor5.isBooked[3] = "0";	
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("666")) {
 						System.out.println("You were booked with " + advisor6.getFirstName() + " " + advisor6.getLastName() + " in "
-						+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor6.isBooked[0] = "0";						
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor6.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor6.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor6.isBooked[3] = "0";	
-							}
-					}
+								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor6.isBooked[0] = "0";						
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor6.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor6.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor6.isBooked[3] = "0";	
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("777")) {
 						System.out.println("You were booked with " + advisor7.getFirstName() + " " + advisor7.getLastName() + " in "
-						+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
-							if (bookingList.get(i)[4] == "Slot 1") {
-								advisor7.isBooked[0] = "0";						
-							}
-							else if (bookingList.get(i)[4] == "Slot 2") {
-								advisor7.isBooked[1] = "0";		
-							}
-							else if (bookingList.get(i)[4] == "Slot 3") {
-								advisor7.isBooked[2] = "0";	
-							}
-							else if (bookingList.get(i)[4] == "Slot 4") {
-								advisor7.isBooked[3] = "0";	
-							}
-					}
+								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
+						if (bookingList.get(i)[4] == "Slot 1") {
+							advisor7.isBooked[0] = "0";						
+						} // If
+						else if (bookingList.get(i)[4] == "Slot 2") {
+							advisor7.isBooked[1] = "0";		
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 3") {
+							advisor7.isBooked[2] = "0";	
+						} // Else if
+						else if (bookingList.get(i)[4] == "Slot 4") {
+							advisor7.isBooked[3] = "0";	
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("888")) {
 						System.out.println("You were booked with " + advisor8.getFirstName() + " " + advisor8.getLastName() + " in "
-						+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
+								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
 						if (bookingList.get(i)[4] == "Slot 1") {
 							advisor8.isBooked[0] = "0";						
-						}
+						} // If
 						else if (bookingList.get(i)[4] == "Slot 2") {
 							advisor8.isBooked[1] = "0";		
-						}
+						} // Else if
 						else if (bookingList.get(i)[4] == "Slot 3") {
 							advisor8.isBooked[2] = "0";	
-						}
+						} // Else if
 						else if (bookingList.get(i)[4] == "Slot 4") {
 							advisor8.isBooked[3] = "0";	
-						}
-					}
+						} // Else if
+					} // Else if
 					else if (bookingList.get(i)[1].equals("999")) {
 						System.out.println("You were booked with " + advisor9.getFirstName() + " " + advisor9.getLastName()+ " in "
 								+ bookingList.get(i)[4] + ". Your booking is now cancelled.");
 						if (bookingList.get(i)[4] == "Slot 1") {
 							advisor9.isBooked[0] = "0";						
-						}
+						} // If
 						else if (bookingList.get(i)[4] == "Slot 2") {
 							advisor9.isBooked[1] = "0";		
-						}
+						} // Else if
 						else if (bookingList.get(i)[4] == "Slot 3") {
 							advisor9.isBooked[2] = "0";	
-						}
+						} // Else if
 						else if (bookingList.get(i)[4] == "Slot 4") {
 							advisor9.isBooked[3] = "0";	
-						}
-					}
-				}
+						} // Else if
+					} // Else if
+				} // If
 				
 				for (int j = 0; j < bookingList.size(); j++) {
 					if (bookingList.get(j)[0].equals(studentUsername)) {
 						bookingList.remove(j);
-					}
-				}
+					} // If
+				} // For
 				
 				studentLoggedInMenu();
 							
-			} // end of for loop
+			} // For
 			
-		} // end of if logInAsStudent
-	} // end of cancel a Booking method
-
-	
-
-
+		} // If
+	} // cancelABooking()
 
 } // end of Process

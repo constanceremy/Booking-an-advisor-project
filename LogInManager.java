@@ -7,7 +7,6 @@ public class LogInManager {
 	
 	// creating the ArrayList Users 
 	static ArrayList<String[]> users = new ArrayList<String[]>();
-	private static Scanner readData;
 	
 	LogInManager() {
 		loadFile();
@@ -17,14 +16,14 @@ public class LogInManager {
 		try {	
 		
 		File file= new File("users.txt");
-		readData = new Scanner(file);
+		Scanner readData = new Scanner(file);
 		String S1 = "";
 		
 			while (readData.hasNextLine()) {
 				S1 = readData.nextLine();
 			
 				String[] account = S1.split(" ", 3);
-//				String[] name = account[2].split(" ", 2);
+				String[] name = account[2].split(" ", 2);
 				
 				users.add(account);
 				
@@ -63,7 +62,7 @@ public class LogInManager {
 	public static boolean ifStudentIDRegistered(String studentID) {
 		
 		boolean studentIDRegistered = false;
-		
+	
 			for (String[] account : users) {
 				if (account[0].equals(studentID)) {
 					studentIDRegistered = true;

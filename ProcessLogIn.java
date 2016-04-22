@@ -36,7 +36,6 @@ public class ProcessLogIn {
 	// creating booleans that are accessible from other classes.
 	static boolean logInAsStudent = false;
 	static boolean logInAsAdvisor = false;
-	private static Scanner input;
 	
 	
 	
@@ -91,7 +90,7 @@ public class ProcessLogIn {
 		
 		String userChoiceOne = ""; // Declaring variable 'choice' as early as possible
 		
-		input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		userChoiceOne = input.nextLine();
 		
 		boolean userDecisionOne = false;
@@ -122,7 +121,7 @@ public class ProcessLogIn {
 			
 			// Create a file instance
 			File file = new File("users.txt");
-			input = new Scanner(System.in);
+			Scanner input = new Scanner(System.in);
 			
 			LogInManager loginManager = new LogInManager();
 			
@@ -234,7 +233,7 @@ public class ProcessLogIn {
 	// A log-in method that is called when user wishes to log in rather than register. 
 	public static void logInMenu() {
 		
-		input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		System.out.println("\nChoose either 1 or 2 to proceed. \n1. Log in as advisor \n2. Log in as student \n3. Go Back ");
 		String userChoiceTwo; // Declaring user's choice as early on as possible
 		boolean userDecisionTwo = false;
@@ -288,7 +287,7 @@ public class ProcessLogIn {
 
 		boolean loggedIn = false;
 		
-		input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		
 			while (!loggedIn) {	
 				System.out.println("-------------------------------------------");
@@ -380,7 +379,7 @@ public class ProcessLogIn {
 
 	public static void whileLogInAsAdvisor() {
 	
-		input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		
 			while (logInAsAdvisor)	{
 				for(int i = 0; i < bookingList.size(); i++) {
@@ -417,8 +416,10 @@ public class ProcessLogIn {
 
 	// The actual log in system method - it is called when the user wishes to log in as student	
 	public static void logInAsStudent() {
+		
+		LogInManager loginManager = new LogInManager();
 			
-		input = new Scanner(System.in); 
+		Scanner input = new Scanner(System.in); 
 		 
 		System.out.println("-------------------------------------------");
 		System.out.println("1. Go back");
@@ -443,7 +444,7 @@ public class ProcessLogIn {
 			 System.out.println("\n---------------------------------------");
 			 System.out.println("Welcome to EazyBook - " + studentFullName);
 			 System.out.println("---------------------------------------\n");	 	 
-			studentLoggedInMenu();		
+			 studentLoggedInMenu();		
 		} // If
 		else {
 			 System.out.println("Wrong username or password input, please try again.");
@@ -469,7 +470,7 @@ public class ProcessLogIn {
 
 	public static void studentLoggedInMenu() {
 		
-		input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 		String menuChoiceStudent1;
 		boolean correctInput = false;
 
@@ -524,7 +525,7 @@ public class ProcessLogIn {
 	
 	public static void makeABooking() {
 		
-		input = new Scanner(System.in);
+		Scanner input = new Scanner(System.in);
 			
 		System.out.println("\nThis is the list of available advisors to you: ");
 		System.out.println("---------------------------------------------------------");

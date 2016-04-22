@@ -42,10 +42,6 @@ public class LogInManager {
 		System.out.println("There has been no registrations yet - to proceed, please register an account");
 		
 	}
-	
-	
-	
-	
 }
 
 	
@@ -56,6 +52,7 @@ public class LogInManager {
 			for (String[] account : users) {
 				if (account[0].equals(studentID) && account[1].equals(password)) {
 					result = true;
+					ProcessLogIn.studentFullName = account[2];
 				}
 			}
 		
@@ -63,18 +60,48 @@ public class LogInManager {
 			
 		}
 		
-		public static boolean authorize(String studentID) {
-			boolean result = false;
-			
-			for (String[] account : users) {
-				if (account[0].equals(studentID)) {
-					result = true;
-				}
-			}
 		
-			return result;
+//		public static boolean verifyStudentID(String studentID) {
+//			boolean result = false;
+//			
+//			for (String[] account : users) {
+//				if (account[0].equals(studentID)) {
+//					result = true;
+//				}
+//			}
+//		
+//			return result;
+//			
+//		}
+		
+		
+		
+		
+		
+	
+		public static boolean ifStudentIDRegistered(String studentID) {
+			boolean studentIDRegistered = false;
+//			Scanner input = new Scanner(System.in);
 			
-		}
+			
+				for (String[] account : users) {
+					if (account[0].equals(studentID)) {
+						studentIDRegistered = true;
+//						System.out.println("This username is already in use, please use another or log-in");
+//						ProcessLogIn.studentID = input.nextLine();
+					}// If
+					
+					else {
+						studentIDRegistered = false;
+					}
+				}// For
+			
+			return studentIDRegistered;
+		}// Method
+		
+		
+		
+		
 		
 		
 	

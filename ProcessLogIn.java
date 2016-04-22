@@ -2,6 +2,7 @@ package Project;
 
 import java.util.*;
 import java.io.*;
+import java.nio.*;
 
 public class ProcessLogIn {
 	
@@ -149,9 +150,11 @@ public class ProcessLogIn {
 			File file = new File("users.txt");
 			Scanner input = new Scanner(System.in);
 			
+			LogInManager loginManager = new LogInManager();
 			
 			// Create a object of type PrintWriter  and FileOutputStream makes the text append previous text
 			try (PrintWriter output = new PrintWriter(new FileOutputStream(file, true));) {
+				
 				
 				
 			
@@ -162,23 +165,34 @@ public class ProcessLogIn {
 			   student1.setLastName(input.next());
 			   
 			   System.out.println("Please enter your StudentID:");
-			   student1.setStudentID(input.nextLine());
-			   String studentID = input.nextLine();
-			   Boolean studentIDInput = false;
+			   student1.setStudentID(input.next());
+			   boolean studentIDInput = false;
+			   boolean studentIDRegistered = false; 
+			   
+			   
 			   while (!studentIDInput) {
-					   if (studentID.length() == 8
-						&& Character.isLetter(studentID.charAt(0)) 
-						&& Character.isLetter(studentID.charAt(1))
-						&& Character.isLetter(studentID.charAt(2))
-						&& Character.isLetter(studentID.charAt(3))
-						&& Character.isDigit(studentID.charAt(4))
-						&& Character.isDigit(studentID.charAt(5))
-						&& Character.isLetter(studentID.charAt(6))
-						&& Character.isLetter(studentID.charAt(7))) {
-						   studentIDInput = true;
+					   if (student1.getStudentID().length() == 8
+						&& Character.isLetter(student1.getStudentID().charAt(0)) 
+						&& Character.isLetter(student1.getStudentID().charAt(1))
+						&& Character.isLetter(student1.getStudentID().charAt(2))
+						&& Character.isLetter(student1.getStudentID().charAt(3))
+						&& Character.isDigit(student1.getStudentID().charAt(4))
+						&& Character.isDigit(student1.getStudentID().charAt(5))
+						&& Character.isLetter(student1.getStudentID().charAt(6))
+						&& Character.isLetter(student1.getStudentID().charAt(7))) {
+						
+						   if (loginManager.ifStudentIDRegistered(student1.getStudentID())) {
+							   System.out.println("Username is already in use. Please user another or register");
+						   }
+						   else {
+							   System.out.println("This studentID is not used already. You are good to go!");
+							   studentIDInput = true;
+						   }
+						   
+						   
 					   } else {
 						   System.out.println("Invalid studentID, please try again");
-						   studentID = input.nextLine();
+						   student1.setStudentID(input.next());
 					   }
 			   }// While
 			   
@@ -196,7 +210,7 @@ public class ProcessLogIn {
 			   
 			   
 			   System.out.println("Congratulations - your account has been created ");
-			   output.println(studentID + " " + password + " " + student1.getFirstName() + " " + student1.getLastName());
+			   output.println(student1.getStudentID() + " " + password + " " + student1.getFirstName() + " " + student1.getLastName());
 			      
 			      
 			   output.close();
@@ -431,7 +445,7 @@ public class ProcessLogIn {
 	public static void logInAsStudent() {
 		String studentChooseToRegister = "2";
 	
-		LogInManager loginManager = new LogInManager(); 
+		LogInManager loginManager = new LogInManager();
 		 
 		 
 		 Scanner input = new Scanner(System.in); 
@@ -459,37 +473,9 @@ public class ProcessLogIn {
 			 
 			 System.out.println("You've succesfully logged in\n");
 			 studentUsername = insertStudentID;
-			 System.out.println("-------------------------------");
+			 System.out.println("\n---------------------------------------");
 			 System.out.println("Welcome to EazyBook - " + studentFullName);
-			 System.out.println("-------------------------------");
-			 
-//			 for (int i = 0; i < LogInManager.users.size(); i++) {
-//					if (LogInManager.users.get(i)[0].equals(studentUsername)) {
-//						
-//						studentFirstName = LogInManager.users.get(i)[2];
-//						studentLastName = LogInManager.users.get(i)[3];
-//					}
-//					System.out.println(studentLastName + studentFirstName);
-//
-//
-//			}
-			 
-//			 LogInManager account3 = new LogInManager();
-//			 
-//			 if (account3.authorize(studentUsername)) {
-//			 
-//				 for (String[] account : LogInManager.users) {
-//						if (account[0].equals(studentUsername)) {
-//							studentFirstName = account[2];
-//							studentLastName = account[3];
-//						}
-//					}
-//					
-//				 System.out.println(studentFirstName + studentLastName);
-//
-//			 }
-//			 
-//			 
+			 System.out.println("\n---------------------------------------");	 
 
 				studentLoggedInMenu();
 				
@@ -508,7 +494,7 @@ public class ProcessLogIn {
 	
 	
 	
-
+	// Method created to verify if the studentID appears in the arraylist 'bookingList'
 	public static boolean verifyStudentBooking(String studentUsername) {
 		boolean result = false;
 		
@@ -531,11 +517,6 @@ public class ProcessLogIn {
 		String menuChoiceStudent1;
 		boolean correctInput = false;
 		
-//		System.out.println("-------------------------------");
-//		System.out.println("Welcome to EazyBook - " + studentFullName);
-//		System.out.println("-------------------------------");
-//		
-
 		
 		
 		while (!correctInput) {
@@ -582,7 +563,6 @@ public class ProcessLogIn {
 					if (menuChoiceStudent1.equals("1")) {
 						logInAsStudent = true;
 						cancelABooking();
-//						menuChoiceStudent1 = input.nextLine();
 					}
 				
 					else if (menuChoiceStudent1.equals("2")) {
@@ -609,9 +589,9 @@ public class ProcessLogIn {
 		
 		
 		System.out.println("\nThis is the list of available advisors to you: ");
-		System.out.println("_________________________________________________");
+		System.out.println("---------------------------------------------------------");
 		
-		// here need options to cancel booking!!!!
+		
 
 		
 	 // print advisor choices based on student's topic
@@ -633,7 +613,7 @@ public class ProcessLogIn {
 					System.out.println("9. " + advisor9.getFirstName() + " " + advisor9.getLastName() + " is researching in: " + advisor9.getExpertise());
 	
 	
-	System.out.println("_________________________________________________");
+	System.out.println("---------------------------------------------------------");
 	System.out.println("\nWhich advisor would you like to book?");
 	String menuStudentChoiceOfAdvisor = input.nextLine();
 		

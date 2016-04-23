@@ -43,32 +43,3 @@ public class User {
 	
 
 } // user class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-
-
-

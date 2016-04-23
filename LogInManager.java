@@ -1,6 +1,8 @@
 package Project;
+
 import java.util.*;
 import java.io.*;
+
 public class LogInManager {
  
  // creating the ArrayList Users 
@@ -45,6 +47,7 @@ public class LogInManager {
     for (int i=0;i<user.size();i++) {
     if (user.get(i)[0].equals(studentID)) {
      studentIDRegistered = true;
+     break;
     }// If
     else {
      studentIDRegistered = false;
